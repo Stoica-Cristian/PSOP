@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "socketutil.h": "c",
+        "queue.h": "c",
+        "stdlib.h": "c",
+        "utils.h": "c",
+        "stdio.h": "c",
+        "inet.h": "c",
+        "packet.h": "c",
+        "cstdlib": "c",
+        "socket.h": "c",
+        "in.h": "c",
+        "exchange.h": "c",
+        "hash_table.h": "c",
+        "trie.h": "c"
+    }
+}

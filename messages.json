@@ -1,0 +1,28 @@
+{
+    "messages": [
+        {
+            "type": "direct",
+            "key": "key1",
+            "topic": "",
+            "payload": "Payload data for key1."
+        },
+        {
+            "type": "topic",
+            "key": "",
+            "topic": "livingroom.temperature",
+            "payload": "Payload data for key2."
+        },
+        {
+            "type": "direct",
+            "key": "key1",
+            "topic": "",
+            "payload": "Payload data for key3."
+        },
+        {
+            "type": "fanout",
+            "key": "",
+            "topic": "",
+            "payload": "Payload data for key4."
+        }
+    ]
+}

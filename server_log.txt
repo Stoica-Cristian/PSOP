@@ -1,0 +1,271 @@
+2024-10-30 19:06:49 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-30 19:06:49 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 10:01:44 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 10:01:44 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 10:01:56 INFO  socketutil.c:114: [process_packets(void*)] : Connection closed by client
+2024-10-31 11:54:18 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 11:54:18 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 11:56:11 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 11:56:11 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:04:01 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:04:01 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:04:58 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:04:58 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:05:34 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:05:34 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:05:37 TRACE server.c:44: Aici
+2024-10-31 12:06:02 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:06:02 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:06:03 TRACE server.c:62: Aici
+2024-10-31 12:06:51 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:06:51 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:06:54 TRACE server.c:65: Aici
+2024-10-31 12:07:12 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:07:12 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:18:05 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:18:05 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:18:07 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:18:34 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:18:34 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:18:35 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:19:33 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:19:33 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:19:35 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:20:30 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:20:30 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:20:34 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:21:15 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:21:15 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:21:17 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:21:34 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:21:34 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:21:35 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:21:36 TRACE server.c:65: Bytes received : 97
+2024-10-31 12:21:37 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:21:38 TRACE server.c:65: Bytes received : 76
+2024-10-31 12:21:39 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 12:22:17 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:22:17 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:22:23 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 12:35:37 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:35:37 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:35:39 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:35:40 TRACE server.c:65: Bytes received : 97
+2024-10-31 12:35:41 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:35:42 TRACE server.c:65: Bytes received : 76
+2024-10-31 12:35:50 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 12:36:06 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:36:06 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:36:07 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:36:08 TRACE server.c:65: Bytes received : 97
+2024-10-31 12:36:09 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:36:10 TRACE server.c:65: Bytes received : 76
+2024-10-31 12:36:13 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 12:43:10 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:43:11 TRACE server.c:65: Bytes received : 97
+2024-10-31 12:43:12 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:43:13 TRACE server.c:65: Bytes received : 76
+2024-10-31 12:43:24 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 12:48:19 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:48:20 TRACE server.c:65: Bytes received : 97
+2024-10-31 12:48:21 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:48:22 TRACE server.c:65: Bytes received : 78
+2024-10-31 12:49:20 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 12:49:23 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:49:24 TRACE server.c:65: Bytes received : 97
+2024-10-31 12:49:25 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:49:26 TRACE server.c:65: Bytes received : 78
+2024-10-31 12:51:14 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 12:51:15 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:51:16 TRACE server.c:65: Bytes received : 97
+2024-10-31 12:51:17 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:51:18 TRACE server.c:65: Bytes received : 78
+2024-10-31 12:51:20 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 12:51:23 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:51:24 TRACE server.c:65: Bytes received : 97
+2024-10-31 12:51:25 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:51:26 TRACE server.c:65: Bytes received : 78
+2024-10-31 12:51:52 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 12:51:55 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:51:56 TRACE server.c:65: Bytes received : 97
+2024-10-31 12:51:57 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:51:58 TRACE server.c:65: Bytes received : 76
+2024-10-31 12:52:01 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 12:52:30 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:52:31 TRACE server.c:65: Bytes received : 97
+2024-10-31 12:52:32 TRACE server.c:65: Bytes received : 80
+2024-10-31 12:52:33 TRACE server.c:65: Bytes received : 76
+2024-10-31 12:52:55 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 12:53:08 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 12:53:08 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 12:53:11 TRACE server.c:65: Bytes received : 80
+2024-10-31 13:07:46 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 13:07:46 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 13:07:51 TRACE server.c:66: Bytes received : 80
+2024-10-31 13:09:50 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 13:09:50 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 13:09:53 TRACE server.c:68: Bytes received : 80
+2024-10-31 13:09:54 TRACE server.c:68: Bytes received : 97
+2024-10-31 13:09:55 TRACE server.c:68: Bytes received : 80
+2024-10-31 13:09:56 TRACE server.c:68: Bytes received : 76
+2024-10-31 13:13:18 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 13:13:18 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 13:13:24 TRACE server.c:65: Bytes received : 80
+2024-10-31 13:17:13 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 13:17:13 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 13:17:17 TRACE server.c:65: Bytes received : 8
+2024-10-31 13:17:17 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 13:19:06 TRACE server.c:65: Bytes received : 8
+2024-10-31 13:19:07 TRACE server.c:65: Bytes received : 8
+2024-10-31 13:19:08 TRACE server.c:65: Bytes received : 8
+2024-10-31 13:19:09 TRACE server.c:65: Bytes received : 8
+2024-10-31 13:19:32 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 13:20:48 TRACE server.c:65: Bytes received : 80
+2024-10-31 13:20:49 TRACE server.c:65: Bytes received : 97
+2024-10-31 13:20:50 TRACE server.c:65: Bytes received : 80
+2024-10-31 13:20:51 TRACE server.c:65: Bytes received : 76
+2024-10-31 13:21:19 INFO  server.c:50: [process_packets(void*)] : Connection closed by client
+2024-10-31 13:22:54 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 13:22:54 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 13:22:58 TRACE server.c:64: Bytes received : 80
+2024-10-31 13:22:59 TRACE server.c:64: Bytes received : 97
+2024-10-31 13:23:00 TRACE server.c:64: Bytes received : 80
+2024-10-31 13:23:01 TRACE server.c:64: Bytes received : 76
+2024-10-31 13:23:38 INFO  server.c:51: [process_packets(void*)] : Connection closed by client
+2024-10-31 13:23:56 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 13:23:56 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 13:24:01 TRACE server.c:64: Bytes received : 80
+2024-10-31 13:24:02 TRACE server.c:64: Bytes received : 97
+2024-10-31 13:24:03 TRACE server.c:64: Bytes received : 80
+2024-10-31 13:24:04 TRACE server.c:64: Bytes received : 76
+2024-10-31 13:25:05 FATAL socketutil.c:49: [bindSocket(int, struct sockaddr_in *)] : Address already in use
+2024-10-31 13:25:11 FATAL socketutil.c:49: [bindSocket(int, struct sockaddr_in *)] : Address already in use
+2024-10-31 13:25:20 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 13:25:20 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 13:25:24 TRACE server.c:64: Bytes received : 81
+2024-10-31 13:25:25 TRACE server.c:64: Bytes received : 98
+2024-10-31 13:25:26 TRACE server.c:64: Bytes received : 81
+2024-10-31 13:25:27 TRACE server.c:64: Bytes received : 77
+2024-10-31 13:25:49 INFO  server.c:51: [process_packets(void*)] : Connection closed by client
+2024-10-31 13:26:39 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 13:26:39 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 13:26:43 TRACE server.c:64: Bytes received : 80
+2024-10-31 13:26:44 TRACE server.c:64: Bytes received : 97
+2024-10-31 13:26:45 TRACE server.c:64: Bytes received : 80
+2024-10-31 13:26:46 TRACE server.c:64: Bytes received : 76
+2024-10-31 13:27:18 INFO  server.c:51: [process_packets(void*)] : Connection closed by client
+2024-10-31 13:27:22 TRACE server.c:64: Bytes received : 80
+2024-10-31 13:27:23 TRACE server.c:64: Bytes received : 97
+2024-10-31 13:27:24 TRACE server.c:64: Bytes received : 80
+2024-10-31 13:27:25 TRACE server.c:64: Bytes received : 76
+2024-10-31 13:27:27 INFO  server.c:51: [process_packets(void*)] : Connection closed by client
+2024-10-31 13:52:52 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 13:52:52 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 13:52:58 TRACE server.c:66: Bytes received : 80
+2024-10-31 13:52:59 TRACE server.c:66: Bytes received : 97
+2024-10-31 13:53:00 TRACE server.c:66: Bytes received : 80
+2024-10-31 13:53:01 TRACE server.c:66: Bytes received : 76
+2024-10-31 15:48:40 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 15:48:40 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 15:48:44 TRACE server.c:66: Bytes received : 80
+2024-10-31 15:48:45 TRACE server.c:66: Bytes received : 97
+2024-10-31 15:48:46 TRACE server.c:66: Bytes received : 80
+2024-10-31 15:48:47 TRACE server.c:66: Bytes received : 76
+2024-10-31 15:48:56 TRACE server.c:66: Bytes received : 80
+2024-10-31 15:48:57 TRACE server.c:66: Bytes received : 97
+2024-10-31 15:48:58 TRACE server.c:66: Bytes received : 80
+2024-10-31 15:48:59 TRACE server.c:66: Bytes received : 76
+2024-10-31 15:49:04 INFO  server.c:51: [process_packets(void*)] : Connection closed by client
+2024-10-31 15:49:11 INFO  server.c:51: [process_packets(void*)] : Connection closed by client
+2024-10-31 17:35:47 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 17:35:47 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 17:35:51 TRACE server.c:70: Bytes received : 80
+2024-10-31 17:35:52 TRACE server.c:70: Bytes received : 97
+2024-10-31 17:35:53 TRACE server.c:70: Bytes received : 80
+2024-10-31 17:35:54 TRACE server.c:70: Bytes received : 76
+2024-10-31 17:36:04 INFO  server.c:55: [process_packets(void*)] : Connection closed by client with address &s
+2024-10-31 17:36:34 TRACE server.c:70: Bytes received : 80
+2024-10-31 17:36:35 TRACE server.c:70: Bytes received : 97
+2024-10-31 17:36:36 TRACE server.c:70: Bytes received : 80
+2024-10-31 17:36:37 TRACE server.c:70: Bytes received : 76
+2024-10-31 17:36:38 INFO  server.c:55: [process_packets(void*)] : Connection closed by client with address &s
+2024-10-31 17:36:57 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 17:36:57 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 17:37:00 TRACE server.c:70: Bytes received : 80
+2024-10-31 17:37:01 TRACE server.c:70: Bytes received : 97
+2024-10-31 17:37:02 TRACE server.c:70: Bytes received : 80
+2024-10-31 17:37:03 TRACE server.c:70: Bytes received : 76
+2024-10-31 17:37:06 INFO  server.c:55: [process_packets(void*)] : Connection closed by client with address 127.0.0.1
+2024-10-31 17:38:27 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 17:38:27 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 17:38:31 TRACE server.c:71: Bytes received : 80
+2024-10-31 17:38:32 TRACE server.c:71: Bytes received : 97
+2024-10-31 17:38:33 TRACE server.c:71: Bytes received : 80
+2024-10-31 17:38:34 TRACE server.c:71: Bytes received : 76
+2024-10-31 17:38:36 INFO  server.c:55: [process_packets(void*)] : Connection closed by client with address 127.0.0.1 and port 39864
+2024-10-31 18:37:56 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 18:37:56 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:13:03 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:13:03 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:23:00 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:23:00 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:23:30 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:23:30 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:23:33 INFO  server.c:129: Aici
+2024-10-31 22:25:53 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:25:53 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:26:00 INFO  server.c:128: Aici
+2024-10-31 22:26:27 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:26:27 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:26:28 INFO  server.c:128: Aici
+2024-10-31 22:26:28 INFO  server.c:130: Aici
+2024-10-31 22:26:48 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:26:48 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:26:49 INFO  server.c:134: Aici
+2024-10-31 22:27:04 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:27:04 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:27:52 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:27:52 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:28:14 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:28:14 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:28:15 INFO  exchange.c:23: Aici
+2024-10-31 22:28:43 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:28:43 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:28:44 INFO  exchange.c:18: Aici
+2024-10-31 22:29:46 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:29:46 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:30:15 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:30:15 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:30:35 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:30:35 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:31:11 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:31:11 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:31:13 INFO  exchange.c:18: Aici
+2024-10-31 22:32:25 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:32:25 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:32:26 INFO  hash_table.c:49: Aici 1
+2024-10-31 22:36:39 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:36:39 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:37:42 INFO  server.c:60: [process_packets(void*)] : Connection closed by client with address 127.0.0.1 and port 36838
+2024-10-31 22:37:50 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:37:50 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:38:23 INFO  server.c:60: [process_packets(void*)] : Connection closed by client with address 127.0.0.1 and port 50894
+2024-10-31 22:44:06 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:44:06 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:46:13 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:46:13 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:46:14 DEBUG server.c:114: [parse_packet_payload_to_json(packet*)] : Error parsing JSON payload
+2024-10-31 22:48:15 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:48:15 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:49:14 INFO  server.c:60: [process_packets(void*)] : Connection closed by client with address 127.0.0.1 and port 55582
+2024-10-31 22:49:23 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:49:23 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:51:17 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:51:17 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:51:49 INFO  server.c:60: [process_packets(void*)] : Connection closed by client with address 127.0.0.1 and port 37346
+2024-10-31 22:51:56 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:51:56 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:53:11 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:53:11 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-10-31 22:54:42 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-10-31 22:54:42 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
