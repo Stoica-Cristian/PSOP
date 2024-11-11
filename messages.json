@@ -3,26 +3,51 @@
         {
             "type": "direct",
             "key": "key1",
-            "topic": "",
-            "payload": "Payload data for key1."
+            "payload": "Payload data for message 1."
         },
         {
             "type": "topic",
-            "key": "",
             "topic": "livingroom.temperature",
-            "payload": "Payload data for key2."
+            "payload": "Payload data for message 2."
         },
         {
             "type": "direct",
-            "key": "key1",
-            "topic": "",
-            "payload": "Payload data for key3."
+            "key": "key2",
+            "payload": "Payload data for message 3."
         },
         {
             "type": "fanout",
-            "key": "",
-            "topic": "",
-            "payload": "Payload data for key4."
+            "payload": "Payload data for message 4."
+        },
+        {
+            "type": "topic",
+            "topic": "livingroom.humidity",
+            "payload": "Payload data for message 5."
+        },
+        {
+            "type": "direct",
+            "key": "key3",
+            "payload": "Payload data for message 6."
+        },
+        {
+            "type": "topic",
+            "topic": "kitchen.temperature",
+            "payload": "Payload data for message 7."
+        },
+        {
+            "type": "topic",
+            "topic": "bedroom.humidity",
+            "payload": "Payload data for message 8."
+        },
+        {
+            "type": "topic",
+            "topic": "garage.door",
+            "payload": "Payload data for message 9."
+        },
+        {
+            "type": "topic",
+            "topic": "livingroom.temperature.celsius",
+            "payload": "Payload data for message 10."
         }
     ]
 }

@@ -15,9 +15,12 @@
 #include <fcntl.h>
 
 #include "log.h"
+#include "packet.h"
 
 void set_log_file(const char *filename,  int level);
 
 void send_data_from_terminal(int socketFD);
+
+void send_packet(int socketfd, packet *packet);
 
 #endif

@@ -2,7 +2,8 @@
 #define PACKEt_H
 
 #include "log.h"
-#include "utils.h"
+#include <stdlib.h>
+#include <string.h>
 
 // #define STRUCTURED_PACKET
 

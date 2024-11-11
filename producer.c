@@ -1,15 +1,18 @@
 #include "socketutil.h"
-#include "packet.h"
+#include "utils.h"
 
 char **read_and_parse_json_from_file(const char *filename, int *message_count);
-void send_packet(int socketfd, packet *packet);
+void *process_packets(void *);
+
+int socketFD;
+struct sockaddr_in *address;
 
 int main()
 {
-    set_log_file("client_log.txt", LOG_TRACE);
+    set_log_file("producer_log.txt", LOG_TRACE);
 
-    int socketFD = create_tcp_ipv4_socket();
-    struct sockaddr_in *address = create_ipv4_address("127.0.0.1", 8080);
+    socketFD = create_tcp_ipv4_socket();
+    address = create_ipv4_address("127.0.0.1", 8080);
 
     connect_to_server(socketFD, address);
 
@@ -21,6 +24,9 @@ int main()
 
     if (messages)
     {
+        pthread_t id;
+        pthread_create(&id, NULL, process_packets, NULL);
+
         for (int i = 0; i < message_count; i++)
         {
             packet packet;
@@ -31,46 +37,60 @@ int main()
             log_trace("Message %d: %s", i + 1, packet.payload);
             free(messages[i]);
 
-            sleep(1);
-            // TO DO: ACK
+            usleep(1000000); // sleep for 1 second
         }
         free(messages);
     }
     //========================================================//
 
-    while (1)
-    {
-        sleep(10);
-    }
-
     close(socketFD);
-
+    free(address);
+    
     return 0;
 }
 
-void send_packet(int socketfd, packet *packet)
+void *process_packets(void *)
 {
-    if (!packet)
+    packet packet;
+    packet.packet_type = PKT_UNKNOWN;
+
+    while (true)
     {
-        log_debug("[send_packet(int, packet*)] : NULL packet pointer");
-        return;
+        ssize_t bytes_received = recv(socketFD, &packet, MAX_PACKET_SIZE, 0);
+
+        if (bytes_received == 0)
+        {
+            char ip_str[INET_ADDRSTRLEN];
+            inet_ntop(AF_INET, &(address->sin_addr), ip_str, INET_ADDRSTRLEN);
+            log_info("[process_packets(void*)] : Connection closed by server with address %s and port %d",
+                     ip_str, ntohs(address->sin_addr.s_addr));
+            break;
+        }
+
+        if (bytes_received < 0)
+        {
+            log_error("[process_packets(void*)] : %s", strerror(errno));
+            break;
+        }
+
+        if (bytes_received > 0)
+        {
+            packet.payload[bytes_received - sizeof(packet_type)] = '\0';
+
+            switch (packet.packet_type)
+            {
+            case PKT_PRODUCER_ACK:
+                log_info("[process_packets(void*)] : ACK received");
+                break;
+
+            case PKT_UNKNOWN:
+            default:
+                log_info("[process_packets(void*)] : Packet unknown");
+            }
+        }
     }
 
-    ssize_t bytes_sent = send(socketfd, packet, sizeof(packet_type) + strlen(packet->payload), 0);
-
-    if (bytes_sent == -1)
-    {
-        log_error("[send_packet(int, packet*)] : &s", strerror(errno));
-        exit(EXIT_FAILURE);
-    }
-    else if (bytes_sent < sizeof(packet_type) + strlen(packet->payload))
-    {
-        log_warn("[send_packet(int, packet*)] : incomplete packet sent (%zd of %zu bytes)", bytes_sent, sizeof(packet_type) + strlen(packet->payload));
-    }
-    else if (bytes_sent == 0)
-    {
-        log_info("[send_packet(int, packet*)] : Connection closed by server");
-    }
+    return NULL;
 }
 
 char *create_json_message(const char *binding_key, const char *payload)

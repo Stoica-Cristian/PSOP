@@ -76,7 +76,7 @@ void free_queue(queue *q)
 
 void print_queue(queue *q)
 {
-    printf("\n\n");
+    printf("\n");
     if (strlen(q->q_topic) > 0)
         printf("Queue Topic: %s\n", q->q_topic);
 
@@ -94,4 +94,14 @@ void print_queue(queue *q)
         current = current->next;
     }
     printf("\n\n");
+}
+
+void print_queues(queue *q)
+{
+    queue* current_queue = q;
+    while(current_queue)
+    {
+        print_queue(current_queue);
+        current_queue = current_queue->next_queue;
+    }
 }

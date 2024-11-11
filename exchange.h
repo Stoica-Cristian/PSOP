@@ -16,7 +16,7 @@ typedef struct fanout_exchange
 
 typedef struct topic_exchange
 {
-    trie_node *trie_root;
+    trie_node *trie;
 } topic_exchange;
 
 typedef enum
@@ -41,9 +41,19 @@ typedef struct exchange
 // Direct exchange
 
 direct_exchange *create_direct_exchange();
-void exch_insert_queue(direct_exchange *exchange, queue *q);
-queue *exch_get_queue(direct_exchange *exchange, const char *binding_key);
-void exch_insert_message(direct_exchange* exchange, message message, const char* binding_key);
+void direct_exch_insert_queue(direct_exchange *exchange, queue *q);
+queue *direct_exch_get_queue(direct_exchange *exchange, const char *binding_key);
+void direct_exch_insert_message(direct_exchange *exchange, message message, const char *binding_key);
+void direct_exch_print_queues(direct_exchange *exchange);
 void free_direct_exchange(direct_exchange *exchange);
+
+// Topic exchange
+
+topic_exchange *create_topic_exchange();
+void topic_exch_insert_topic(topic_exchange *exchange, const char *topic);
+void topic_exch_insert_queue(topic_exchange *exchange, const char *topic, queue *q);
+queue *topic_exch_search_topic(topic_exchange *exchange, const char *topic);
+void topic_exch_print_trie(topic_exchange *exchange);
+void free_topic_exchange(topic_exchange *exchange);
 
 #endif
