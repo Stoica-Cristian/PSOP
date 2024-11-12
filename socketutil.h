@@ -27,13 +27,13 @@ typedef struct
     struct sockaddr_in address;
     int error;
     bool acceptedSuccessfully;
-} AcceptedConnection;
+} client_connection;
 
 void bind_socket(int serverSocketFD, struct sockaddr_in* address);
 void listen_for_connections(int serverSocketFD);
 
 // void start_accepting_connections(int serverSocketFD);
-AcceptedConnection* accept_incoming_connection(int serverSocketFD);
+client_connection* accept_incoming_connection(int serverSocketFD);
 
 //==============================================================
 

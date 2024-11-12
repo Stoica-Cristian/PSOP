@@ -1,0 +1,26 @@
+2024-11-12 19:40:27 INFO  consumer.c:57: [main] : Packet unknown
+2024-11-12 19:41:02 INFO  consumer.c:57: [main] : Packet unknown
+2024-11-12 19:41:02 INFO  consumer.c:52: [main] : PKT_CONSUMER_RESPONSE - {"type":"direct","key":"key1","payload":"Payload data for message 1."}
+2024-11-12 19:53:25 INFO  consumer.c:67: [main] : Packet unknown
+2024-11-12 19:53:25 INFO  consumer.c:61: [main] : PKT_CONSUMER_RESPONSE - {"type":"direct","key":"key1","payload":"Payload data for message 1."}
+2024-11-12 23:34:03 INFO  consumer.c:61: [main] : PKT_CONSUMER_RESPONSE - {"type":"direct","key":"key1","payload":"Payload data for message 1."}
+2024-11-12 23:36:11 INFO  consumer.c:63: [main] : PKT_CONSUMER_RESPONSE - {"type":"direct","key":"key1","payload":"Payload data for message 1."}
+2024-11-13 00:37:43 ERROR packet.c:123: [send_consumer_request_packet(int, const char*, const char*)] : Unknown type
+2024-11-13 00:37:43 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 00:41:08 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 00:41:08 INFO  consumer.c:71: [process_packets(void*)] : Packet unknown
+2024-11-13 00:41:08 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 00:43:08 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 00:43:08 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 00:43:08 INFO  consumer.c:139: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.
+2024-11-13 00:43:08 ERROR consumer.c:55: [process_packets(void*)] : Bad file descriptor
+2024-11-13 00:45:19 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 00:45:19 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 00:45:19 INFO  consumer.c:139: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.
+2024-11-13 00:45:19 ERROR consumer.c:55: [process_packets(void*)] : Bad file descriptor
+2024-11-13 00:49:08 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 00:49:08 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 00:49:08 INFO  consumer.c:139: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.
+2024-11-13 00:50:15 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 00:50:15 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 00:50:15 INFO  consumer.c:139: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.

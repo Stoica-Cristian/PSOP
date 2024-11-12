@@ -34,12 +34,13 @@ void enqueue_message(queue *q, const message *msg)
     q->q_size++;
 }
 
-message dequeue(queue *q)
+message dequeue_message(queue *q)
 {
     message msg;
+
     if (q->first_node == NULL)
     {
-        msg.type = MSG_INVALID;
+        msg.type = MSG_EMPTY;
         msg.payload[0] = '\0';
         return msg;
     }

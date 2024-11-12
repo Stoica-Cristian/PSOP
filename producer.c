@@ -37,15 +37,17 @@ int main()
             log_trace("Message %d: %s", i + 1, packet.payload);
             free(messages[i]);
 
-            usleep(1000000); // sleep for 1 second
+            usleep(100000); // 100ms
         }
         free(messages);
+        pthread_join(id, NULL);
     }
     //========================================================//
 
     close(socketFD);
     free(address);
-    
+
+
     return 0;
 }
 
@@ -91,21 +93,6 @@ void *process_packets(void *)
     }
 
     return NULL;
-}
-
-char *create_json_message(const char *binding_key, const char *payload)
-{
-    cJSON *json = cJSON_CreateObject();
-    if (!json)
-        return NULL;
-
-    cJSON_AddStringToObject(json, "binding_key", binding_key);
-    cJSON_AddStringToObject(json, "payload", payload);
-
-    char *json_string = cJSON_PrintUnformatted(json);
-    cJSON_Delete(json);
-
-    return json_string;
 }
 
 char **read_and_parse_json_from_file(const char *filename, int *message_count)

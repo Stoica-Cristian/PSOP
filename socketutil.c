@@ -70,20 +70,20 @@ void listen_for_connections(int serverSocketFD)
 // {
 //     while (true)
 //     {
-//         AcceptedConnection *clientConnection = accept_incoming_connection(serverSocketFD);
+//         client_connection *clientConnection = accept_incoming_connection(serverSocketFD);
 
 //         receive_incoming_data(clientConnection);
 //     }
 // }
 
-AcceptedConnection *accept_incoming_connection(int serverSocketFD)
+client_connection *accept_incoming_connection(int serverSocketFD)
 {
     struct sockaddr_in clientAddress;
     socklen_t clientAddressSize = sizeof(struct sockaddr_in);
 
     int clientSocketFD = accept(serverSocketFD, (struct sockaddr *)&clientAddress, &clientAddressSize);
 
-    AcceptedConnection *acceptedConnection = malloc(sizeof(AcceptedConnection));
+    client_connection *acceptedConnection = malloc(sizeof(client_connection));
 
     acceptedConnection->acceptedSocketFD = clientSocketFD;
     acceptedConnection->address = clientAddress;

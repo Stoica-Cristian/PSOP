@@ -2,10 +2,13 @@
 #include "exchange.h"
 #include "utils.h"
 
-void receive_incoming_data(AcceptedConnection *acceptedConnection);
+void receive_incoming_data(client_connection *established_connection);
 void *process_packets(void *arg);
 cJSON *parse_packet_payload_to_json(packet *packet);
 void assign_message_to_exchange(cJSON *json_payload);
+
+void handle_producer_publish(int socketFD, cJSON *json_payload);
+void handle_consumer_request(int socketFD, cJSON *json_payload);
 
 direct_exchange *direct_exch;
 topic_exchange *topic_exch;
@@ -27,7 +30,7 @@ int main()
 
     while (true)
     {
-        AcceptedConnection *clientConnection = accept_incoming_connection(serverSocketFD);
+        client_connection *clientConnection = accept_incoming_connection(serverSocketFD);
 
         receive_incoming_data(clientConnection);
     }
@@ -37,16 +40,22 @@ int main()
     return 0;
 }
 
-void receive_incoming_data(AcceptedConnection *acceptedConnection)
+void receive_incoming_data(client_connection *established_connection)
 {
     pthread_t id;
-    pthread_create(&id, NULL, process_packets, (void *)acceptedConnection);
+    pthread_create(&id, NULL, process_packets, (void *)established_connection);
 }
 
+/**
+ * Processes incoming packets from a client.
+ *
+ * @param arg The client_connection object containing the socket file descriptor and client address.
+ * @return NULL
+ */
 void *process_packets(void *arg)
 {
-    AcceptedConnection *acceptedConnection = (AcceptedConnection *)arg;
-    int socketFD = acceptedConnection->acceptedSocketFD;
+    client_connection *established_connection = (client_connection *)arg;
+    int socketFD = established_connection->acceptedSocketFD;
 
     packet packet_received;
     packet_received.packet_type = PKT_UNKNOWN;
@@ -58,9 +67,9 @@ void *process_packets(void *arg)
         if (bytes_received == 0)
         {
             char ip_str[INET_ADDRSTRLEN];
-            inet_ntop(AF_INET, &(acceptedConnection->address.sin_addr), ip_str, INET_ADDRSTRLEN);
+            inet_ntop(AF_INET, &(established_connection->address.sin_addr), ip_str, INET_ADDRSTRLEN);
             log_info("[process_packets(void*)] : Connection closed by client with address %s and port %d",
-                     ip_str, ntohs(acceptedConnection->address.sin_port));
+                     ip_str, ntohs(established_connection->address.sin_port));
             break;
         }
 
@@ -77,27 +86,18 @@ void *process_packets(void *arg)
 
             if (!json_payload)
             {
-                packet nack;
-                nack.packet_type = PKT_PRODUCER_NACK;
-                send_packet(socketFD, &nack);
-                log_info("[process_packets(void*)] : NACK sent for bad JSON formatting");
+                send_bad_format_packet(socketFD);
                 continue;
-            }
-            else
-            {
-                packet ack;
-                ack.packet_type = PKT_PRODUCER_ACK;
-                send_packet(socketFD, &ack);
-                log_info("[process_packets(void*)] : ACK sent");
             }
 
             switch (packet_received.packet_type)
             {
             case PKT_PRODUCER_PUBLISH:
-                printf("%s - %s\n", packet_received.packet_type == 1 ? "PKT_PRODUCER_PUBLISH" : "PKT_UNKNOWN", packet_received.payload);
+                handle_producer_publish(socketFD, json_payload);
+                break;
 
-                // maybe on another thread
-                assign_message_to_exchange(json_payload);
+            case PKT_CONSUMER_REQUEST:
+                handle_consumer_request(socketFD, json_payload);
                 break;
 
             case PKT_UNKNOWN:
@@ -111,43 +111,26 @@ void *process_packets(void *arg)
     return NULL;
 }
 
-cJSON *parse_packet_payload_to_json(packet *packet)
-{
-    if (!packet)
-    {
-        log_debug("[parse_packet_payload_to_json(packet*)] : NULL packet pointer");
-        return NULL;
-    }
-
-    cJSON *json_payload = cJSON_Parse(packet->payload);
-
-    if (json_payload == NULL)
-    {
-        log_debug("[parse_packet_payload_to_json(packet*)] : Error parsing JSON payload");
-        return NULL;
-    }
-
-    return json_payload;
-}
-
 /**
- * Assigns a message to the appropriate exchange based on the JSON payload.
+ * Assigns a message to an exchange based on the JSON payload.
  *
  * @param json_payload The JSON payload containing the message details.
  */
-void assign_message_to_exchange(cJSON *json_payload)
+void handle_producer_publish(int socketFD, cJSON *json_payload)
 {
     cJSON *type_item = cJSON_GetObjectItem(json_payload, "type");
     cJSON *payload_item = cJSON_GetObjectItem(json_payload, "payload");
 
     if (!payload_item)
     {
-        log_error("[assign_message_to_exchange(cJSON*)] : Missing 'payload' in JSON payload");
+        log_info("[assign_message_to_exchange(cJSON*)] : Missing 'payload' in JSON payload");
+        send_incomplete_packet(socketFD);
         return;
     }
     if (!type_item)
     {
-        log_error("[assign_message_to_exchange(cJSON*)] : Missing 'type' in JSON payload");
+        log_info("[assign_message_to_exchange(cJSON*)] : Missing 'type' in JSON payload");
+        send_incomplete_packet(socketFD);
         return;
     }
 
@@ -166,10 +149,13 @@ void assign_message_to_exchange(cJSON *json_payload)
 
         if (!key_item || !key_item->valuestring)
         {
-            log_error("[assign_message_to_exchange(cJSON*)] : 'key' is NULL");
+            log_info("[assign_message_to_exchange(cJSON*)] : 'key' is NULL");
+            send_incomplete_packet(socketFD);
             return;
         }
         const char *key = key_item->valuestring;
+
+        send_producer_ack_packet(socketFD);
 
         direct_exch_insert_message(direct_exch, message, key);
         direct_exch_print_queues(direct_exch);
@@ -181,14 +167,152 @@ void assign_message_to_exchange(cJSON *json_payload)
 
         if (!topic_item || !topic_item->valuestring)
         {
-            log_error("[assign_message_to_exchange(cJSON*)] : 'topic' is NULL");
+            log_info("[assign_message_to_exchange(cJSON*)] : 'topic' is NULL");
+            send_incomplete_packet(socketFD);
             return;
         }
 
         const char *topic = topic_item->valuestring;
         message.type = MSG_TOPIC;
 
+        send_producer_ack_packet(socketFD);
+
         topic_exch_insert_topic(topic_exch, topic);
         topic_exch_print_trie(topic_exch);
     }
+}
+
+/**
+ * Handles a consumer request based on the JSON payload.
+ *
+ * @param socketFD The socket file descriptor to send the response to.
+ * @param json_payload The JSON payload containing the request details.
+ */
+void handle_consumer_request(int socketFD, cJSON *json_payload)
+{
+    cJSON *type_item = cJSON_GetObjectItem(json_payload, "type");
+
+    if (!type_item)
+    {
+        log_info("[handle_consumer_request(int, cJSON*)] : Missing 'type' in JSON payload");
+        send_incomplete_packet(socketFD);
+        return;
+    }
+
+    const char *type = type_item->valuestring;
+
+    if (strcmp(type, "direct") == 0)
+    {
+        cJSON *key_item = cJSON_GetObjectItem(json_payload, "key");
+
+        if (!key_item)
+        {
+            log_info("[handle_consumer_request(int, cJSON*)] : Missing 'key' in JSON payload");
+            send_incomplete_packet(socketFD);
+            return;
+        }
+        const char *key = key_item->valuestring;
+
+        queue *q = direct_exch_get_queue(direct_exch, key);
+
+        if (!q)
+        {
+            log_info("[handle_consumer_request(int, cJSON*)] : Queue not found for key %s", key);
+            return;
+        }
+
+        message msg = dequeue_message(q);
+
+        // until implementation of queue condition variable
+        if (msg.type == MSG_EMPTY)
+        {
+            log_info("[handle_consumer_request(int, cJSON*)] : No messages in queue for key %s", key);
+            return;
+        }
+
+        cJSON *json_response = cJSON_CreateObject();
+        cJSON_AddStringToObject(json_response, "type", "direct");
+        cJSON_AddStringToObject(json_response, "key", key);
+        cJSON_AddStringToObject(json_response, "payload", msg.payload);
+
+        packet response_packet;
+        response_packet.packet_type = PKT_CONSUMER_RESPONSE;
+
+        char *json_response_str = cJSON_PrintUnformatted(json_response);
+        strncpy(response_packet.payload, json_response_str, sizeof(response_packet.payload) - 1);
+        free(json_response_str);
+
+        send_packet(socketFD, &response_packet);
+    }
+
+    if (strcmp(type, "topic") == 0)
+    {
+        cJSON *topic_item = cJSON_GetObjectItem(json_payload, "topic");
+
+        if (!topic_item)
+        {
+            log_info("[handle_consumer_request(int, cJSON*)] : Missing 'topic' in JSON payload");
+            send_incomplete_packet(socketFD);
+            return;
+        }
+
+        const char *topic = topic_item->valuestring;
+
+        printf("\n\nTopic: %s\n\n", topic);
+        queue *q = topic_exch_search_topic(topic_exch, topic);
+
+        if (!q)
+        {
+            log_info("[handle_consumer_request(int, cJSON*)] : Queue not found for topic %s", topic);
+            return;
+        }
+
+        message msg = dequeue_message(q);
+
+        // until implementation of queue condition variable
+        if (msg.type == MSG_EMPTY)
+        {
+            log_error("[handle_consumer_request(int, cJSON*)] : No messages in queue for topic %s", topic);
+            return;
+        }
+
+        cJSON *json_response = cJSON_CreateObject();
+        cJSON_AddStringToObject(json_response, "type", "topic");
+        cJSON_AddStringToObject(json_response, "topic", topic);
+        cJSON_AddStringToObject(json_response, "payload", msg.payload);
+
+        packet response_packet;
+        response_packet.packet_type = PKT_CONSUMER_RESPONSE;
+
+        char *json_response_str = cJSON_PrintUnformatted(json_response);
+        strncpy(response_packet.payload, json_response_str, sizeof(response_packet.payload) - 1);
+        free(json_response_str);
+
+        send_packet(socketFD, &response_packet);
+    }
+}
+
+/**
+ * Parses the payload of a packet to a JSON object.
+ *
+ * @param packet The packet to parse.
+ * @return The JSON object or NULL if an error occurred.
+ */
+cJSON *parse_packet_payload_to_json(packet *packet)
+{
+    if (!packet)
+    {
+        log_debug("[parse_packet_payload_to_json(packet*)] : NULL packet pointer");
+        return NULL;
+    }
+
+    cJSON *json_payload = cJSON_Parse(packet->payload);
+
+    if (json_payload == NULL)
+    {
+        log_debug("[parse_packet_payload_to_json(packet*)] : Error parsing JSON payload");
+        return NULL;
+    }
+
+    return json_payload;
 }

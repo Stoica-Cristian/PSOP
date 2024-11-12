@@ -16,6 +16,7 @@
 
 typedef enum
 {
+    MSG_EMPTY,
     MSG_INVALID,
     MSG_DIRECT,
     MSG_FANOUT,
@@ -48,7 +49,7 @@ typedef struct queue
 
 queue *create_queue(const char *topic, const char *binding_key);
 void enqueue_message(queue *q, const message *msg);
-message dequeue(queue *q);
+message dequeue_message(queue *q);
 void print_queue(queue *q);
 void print_queues(queue *q);
 void free_queue(queue *q);

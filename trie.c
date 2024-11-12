@@ -76,7 +76,7 @@ trie_node *trie_search_topic(trie_node *root, const char *topic)
     trie_node *current = root;
     char *topic_copy = strdup(topic);
     char *part = strtok(topic_copy, ".");
-
+ 
     while (part)
     {
         bool found = false;
@@ -86,6 +86,7 @@ trie_node *trie_search_topic(trie_node *root, const char *topic)
             if (current->children[i] &&
                 strcmp(current->children[i]->topic_part, part) == 0)
             {
+                printf("Found: %s\n", part);
                 current = current->children[i];
                 found = true;
                 break;
