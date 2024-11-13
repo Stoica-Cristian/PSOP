@@ -47,7 +47,6 @@ int main()
     close(socketFD);
     free(address);
 
-
     return 0;
 }
 
@@ -83,6 +82,12 @@ void *process_packets(void *)
             {
             case PKT_PRODUCER_ACK:
                 log_info("[process_packets(void*)] : ACK received");
+                break;
+            case PKT_BAD_FORMAT:
+                log_error("[process_packets(void*)] : Bad format packet received");
+                break;
+            case PKT_INCOMPLETE:
+                log_error("[process_packets(void*)] : Incomplete packet received");
                 break;
 
             case PKT_UNKNOWN:

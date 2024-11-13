@@ -74,7 +74,7 @@ void topic_exch_insert_queue(topic_exchange *exchange, const char *topic, queue 
 queue *topic_exch_search_topic(topic_exchange *exchange, const char *topic)
 {
     trie_node *node = trie_search_topic(exchange->trie, topic);
-    return node ? node->queues : NULL;
+    return node ? node->queue : NULL;
 }
 
 void topic_exch_print_trie(topic_exchange *exchange)

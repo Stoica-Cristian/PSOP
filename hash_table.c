@@ -19,6 +19,7 @@ hash_table *create_hash_table()
     {
         table->buckets[i] = NULL;
     }
+
     return table;
 }
 
@@ -30,6 +31,7 @@ void ht_insert_queue(hash_table *table, queue *q)
     {
         q->next_queue = table->buckets[index]->queues;
         table->buckets[index]->queues = q;
+        table->buckets[index]->queue_count++;
     }
     else
     {
@@ -37,10 +39,20 @@ void ht_insert_queue(hash_table *table, queue *q)
 
         new_hash_node->binding_key = strdup(q->q_binding_key);
         new_hash_node->queues = q;
+        new_hash_node->current_queue_index = 0;
+        new_hash_node->queue_count = 1;
         table->buckets[index] = new_hash_node;
     }
 }
 
+
+/**
+ * Retrieves the queue associated with the given binding key from the hash table using a round-robin mechanism.
+ *
+ * @param table The hash table from which to retrieve the queue.
+ * @param binding_key The key associated with the queue to retrieve.
+ * @return A pointer to the queue associated with the given binding key, or NULL if the key is not found.
+ */
 queue *ht_get_queue(hash_table *table, const char *binding_key)
 {
     unsigned int index = hash(binding_key);
@@ -50,18 +62,30 @@ queue *ht_get_queue(hash_table *table, const char *binding_key)
     if (node == NULL)
         return NULL;
 
-    queue *q = node->queues;
-    while (q != NULL)
+    if (node->queue_count == 0)
     {
-        if (strcmp(q->q_binding_key, binding_key) == 0)
-        {
-            return q;
-        }
+        log_error("[ht_get_queue(hash_table*, const char*)] : Queue count is 0");
+        return NULL;
+    }
+
+    if (node->queue_count == 1)
+    {
+        return node->queues;
+    }
+
+    queue *q = node->queues;
+    int current_index = node->current_queue_index % node->queue_count;
+
+    for (int i = 0; i < current_index; i++)
+    {
         q = q->next_queue;
     }
 
-    return NULL;
+    node->current_queue_index = (node->current_queue_index + 1) % node->queue_count;
+
+    return q;
 }
+
 
 void free_hash_table(hash_table *table)
 {

@@ -306,3 +306,42 @@
 2024-11-13 08:37:13 TRACE producer.c:37: Message 10: {"type":"topic","topic":"livingroom.temperature.celsius","payload":"Payload data for message 10."}
 2024-11-13 08:37:13 INFO  producer.c:85: [process_packets(void*)] : ACK received
 2024-11-13 08:37:22 INFO  producer.c:67: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2024-11-13 09:35:22 TRACE producer.c:37: Message 1: {"type":"direct","key":"key1","payload":"Payload data for message 1."}
+2024-11-13 09:35:22 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:35:22 TRACE producer.c:37: Message 2: {"type":"topic","topic":"livingroom.temperature","payload":"Payload data for message 2."}
+2024-11-13 09:35:22 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:35:22 TRACE producer.c:37: Message 3: {"type":"direct","key":"key2","payload":"Payload data for message 3."}
+2024-11-13 09:35:22 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:35:22 TRACE producer.c:37: Message 4: {"type":"fanout","payload":"Payload data for message 4."}
+2024-11-13 09:35:22 TRACE producer.c:37: Message 5: {"type":"topic","topic":"livingroom.humidity","payload":"Payload data for message 5."}
+2024-11-13 09:35:22 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:35:23 TRACE producer.c:37: Message 6: {"type":"direct","key":"key3","payload":"Payload data for message 6."}
+2024-11-13 09:35:23 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:35:23 TRACE producer.c:37: Message 7: {"type":"topic","topic":"kitchen.temperature","payload":"Payload data for message 7."}
+2024-11-13 09:35:23 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:35:23 TRACE producer.c:37: Message 8: {"type":"topic","topic":"bedroom.humidity","payload":"Payload data for message 8."}
+2024-11-13 09:35:23 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:35:23 TRACE producer.c:37: Message 9: {"type":"topic","topic":"garage.door","payload":"Payload data for message 9."}
+2024-11-13 09:35:23 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:35:23 TRACE producer.c:37: Message 10: {"type":"topic","topic":"livingroom.temperature.celsius","payload":"Payload data for message 10."}
+2024-11-13 09:35:23 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:35:39 INFO  producer.c:67: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2024-11-13 09:39:17 TRACE producer.c:37: Message 1: {"type":"direct","key":"key1","payload":"Payload data for message 1."}
+2024-11-13 09:39:17 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:39:17 TRACE producer.c:37: Message 2: {"type":"topic","topic":"livingroom.temperature","payload":"Payload data for message 2."}
+2024-11-13 09:39:17 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:39:17 TRACE producer.c:37: Message 3: {"type":"direct","key":"key2","payload":"Payload data for message 3."}
+2024-11-13 09:39:17 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:39:17 TRACE producer.c:37: Message 4: {"type":"fanout","payload":"Payload data for message 4."}
+2024-11-13 09:39:17 TRACE producer.c:37: Message 5: {"type":"topic","topic":"livingroom.humidity","payload":"Payload data for message 5."}
+2024-11-13 09:39:17 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:39:17 TRACE producer.c:37: Message 6: {"type":"direct","key":"key3","payload":"Payload data for message 6."}
+2024-11-13 09:39:17 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:39:17 TRACE producer.c:37: Message 7: {"type":"topic","topic":"kitchen.temperature","payload":"Payload data for message 7."}
+2024-11-13 09:39:17 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:39:17 TRACE producer.c:37: Message 8: {"type":"topic","topic":"bedroom.humidity","payload":"Payload data for message 8."}
+2024-11-13 09:39:17 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:39:18 TRACE producer.c:37: Message 9: {"type":"topic","topic":"garage.door","payload":"Payload data for message 9."}
+2024-11-13 09:39:18 INFO  producer.c:85: [process_packets(void*)] : ACK received
+2024-11-13 09:39:18 TRACE producer.c:37: Message 10: {"type":"topic","topic":"livingroom.temperature.celsius","payload":"Payload data for message 10."}
+2024-11-13 09:39:18 INFO  producer.c:85: [process_packets(void*)] : ACK received

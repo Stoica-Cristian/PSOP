@@ -4,7 +4,7 @@ trie_node *create_trie_node(const char *topic)
 {
     trie_node *root = (trie_node *)malloc(sizeof(trie_node));
 
-    root->queues = create_queue(topic, "");
+    root->queue = create_queue(topic, "");
     root->is_end_of_topic = false;
     root->topic_part = strdup(topic);
 
@@ -19,8 +19,8 @@ trie_node *create_trie_node(const char *topic)
 trie_node *create_trie()
 {
     trie_node *root = create_trie_node("*");
-    free(root->queues);
-    root->queues = NULL;
+    free(root->queue);
+    root->queue = NULL;
 
     return root;
 }
@@ -62,8 +62,8 @@ void trie_insert_topic(trie_node *root, message message, const char *topic)
     }
 
     current_node->is_end_of_topic = true;
-    current_node->queues = create_queue(topic, "");
-    enqueue_message(current_node->queues, &message);
+    current_node->queue = create_queue(topic, "");
+    enqueue_message(current_node->queue, &message);
 
     free(topic_copy);
 }
@@ -172,7 +172,7 @@ void free_trie(trie_node *root)
         }
     }
 
-    free_queue(root->queues);
+    free_queue(root->queue);
     free(root->topic_part);
     free(root);
 }

@@ -12,11 +12,17 @@ queue *create_queue(const char *topic, const char *binding_key)
     q->first_node = NULL;
     q->last_node = NULL;
     q->next_queue = NULL;
+
+    pthread_mutex_init(&q->mutex, NULL);
+    pthread_cond_init(&q->not_empty_cond, NULL);
+
     return q;
 }
 
 void enqueue_message(queue *q, const message *msg)
 {
+    pthread_mutex_lock(&q->mutex);
+
     q_node *new_node = (q_node *)malloc(sizeof(q_node));
     new_node->message = *msg;
     new_node->next = NULL;
@@ -32,10 +38,20 @@ void enqueue_message(queue *q, const message *msg)
 
     q->last_node = new_node;
     q->q_size++;
+
+    pthread_cond_signal(&q->not_empty_cond);
+    pthread_mutex_unlock(&q->mutex);
 }
 
 message dequeue_message(queue *q)
 {
+    pthread_mutex_lock(&q->mutex);
+
+    while (q->q_size == 0)
+    {
+        pthread_cond_wait(&q->not_empty_cond, &q->mutex);
+    }
+
     message msg;
 
     if (q->first_node == NULL)
@@ -56,11 +72,16 @@ message dequeue_message(queue *q)
 
     free(temp);
     q->q_size--;
+
+    pthread_mutex_unlock(&q->mutex);
+
     return msg;
 }
 
 void free_queue(queue *q)
 {
+    pthread_mutex_lock(&q->mutex);
+
     q_node *current = q->first_node;
 
     while (current != NULL)
@@ -72,6 +93,11 @@ void free_queue(queue *q)
 
     free(q->q_topic);
     free(q->q_binding_key);
+
+    pthread_mutex_unlock(&q->mutex);
+    pthread_mutex_destroy(&q->mutex);
+    pthread_cond_destroy(&q->not_empty_cond);
+    
     free(q);
 }
 
@@ -91,7 +117,7 @@ void print_queue(queue *q)
     while (current != NULL)
     {
         printf("\nMessage %d: %s", index++, current->message.payload);
-        
+
         current = current->next;
     }
     printf("\n\n");
@@ -99,8 +125,8 @@ void print_queue(queue *q)
 
 void print_queues(queue *q)
 {
-    queue* current_queue = q;
-    while(current_queue)
+    queue *current_queue = q;
+    while (current_queue)
     {
         print_queue(current_queue);
         current_queue = current_queue->next_queue;

@@ -8,7 +8,7 @@
 typedef struct trie_node
 {
     char *topic_part;
-    queue *queues;
+    queue *queue;
     struct trie_node *children[MAX_CHILDREN];
     bool is_end_of_topic;
 } trie_node;

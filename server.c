@@ -258,7 +258,6 @@ void handle_consumer_request(int socketFD, cJSON *json_payload)
 
         const char *topic = topic_item->valuestring;
 
-        printf("\n\nTopic: %s\n\n", topic);
         queue *q = topic_exch_search_topic(topic_exch, topic);
 
         if (!q)

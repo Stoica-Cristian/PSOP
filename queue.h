@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <fcntl.h>
+#include <pthread.h>
 
 #include "cJSON.h"
 #include "log.h"
@@ -45,6 +46,8 @@ typedef struct queue
     q_node *first_node;
     q_node *last_node;
     struct queue *next_queue;
+    pthread_mutex_t mutex;
+    pthread_cond_t not_empty_cond;
 } queue;
 
 queue *create_queue(const char *topic, const char *binding_key);

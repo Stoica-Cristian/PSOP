@@ -9,6 +9,8 @@ typedef struct
 {
     char *binding_key;
     queue *queues;
+    int current_queue_index;
+    int queue_count;
 } hash_node;
 
 typedef struct
