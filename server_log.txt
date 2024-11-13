@@ -150,3 +150,64 @@
 2024-11-13 00:50:15 INFO  server.c:266: [handle_consumer_request(int, cJSON*)] : Queue not found for topic livingroom
 2024-11-13 00:50:28 INFO  server.c:71: [process_packets(void*)] : Connection closed by client with address 127.0.0.1 and port 46046
 2024-11-13 00:50:29 INFO  server.c:71: [process_packets(void*)] : Connection closed by client with address 127.0.0.1 and port 46050
+2024-11-13 08:18:23 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-11-13 08:18:23 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-11-13 08:18:30 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:18:30 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:18:30 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:18:30 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:18:31 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:18:31 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:18:31 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:18:31 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:18:31 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:18:50 INFO  server.c:71: [process_packets(void*)] : Connection closed by client with address 127.0.0.1 and port 56186
+2024-11-13 08:19:04 INFO  server.c:229: [handle_consumer_request(int, cJSON*)] : No messages in queue for key key1
+2024-11-13 08:19:04 ERROR server.c:275: [handle_consumer_request(int, cJSON*)] : No messages in queue for topic livingroom.temperature
+2024-11-13 08:20:42 FATAL socketutil.c:49: [bindSocket(int, struct sockaddr_in *)] : Address already in use
+2024-11-13 08:21:31 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-11-13 08:21:31 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-11-13 08:21:35 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:21:35 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:21:35 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:21:35 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:21:36 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:21:36 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:21:36 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:21:36 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:21:36 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:21:39 ERROR server.c:275: [handle_consumer_request(int, cJSON*)] : No messages in queue for topic livingroom.temperature
+2024-11-13 08:25:06 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-11-13 08:25:06 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-11-13 08:25:09 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:25:09 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:25:09 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:25:09 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:25:09 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:25:09 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:25:10 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:25:10 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:25:10 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:25:11 ERROR server.c:275: [handle_consumer_request(int, cJSON*)] : No messages in queue for topic livingroom.temperature
+2024-11-13 08:35:34 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-11-13 08:35:34 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-11-13 08:35:37 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:35:37 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:35:37 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:35:37 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:35:37 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:35:37 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:35:38 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:35:38 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:35:38 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:37:09 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2024-11-13 08:37:09 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2024-11-13 08:37:12 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:37:12 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:37:12 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:37:12 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:37:12 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:37:12 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:37:12 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:37:13 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2024-11-13 08:37:13 INFO  packet.c:86: [send_producer_ack_packet(int)] : Producer ACK packet sent

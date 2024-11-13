@@ -24,3 +24,26 @@
 2024-11-13 00:50:15 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
 2024-11-13 00:50:15 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
 2024-11-13 00:50:15 INFO  consumer.c:139: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.
+2024-11-13 08:18:34 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 08:18:34 INFO  consumer.c:139: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.
+2024-11-13 08:19:04 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 08:19:04 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 08:20:29 INFO  consumer.c:48: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2024-11-13 08:21:39 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 08:21:39 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 08:21:39 INFO  consumer.c:139: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.
+2024-11-13 08:21:56 INFO  consumer.c:48: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2024-11-13 08:25:11 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 08:25:11 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 08:25:11 INFO  consumer.c:139: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.
+2024-11-13 08:25:43 INFO  consumer.c:48: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2024-11-13 08:35:40 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 08:35:40 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 08:35:40 INFO  consumer.c:139: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.
+2024-11-13 08:35:40 INFO  consumer.c:164: [handle_consumer_ack(packet)] : Received payload for topic livingroom.temperature : Payload data for message 2.
+2024-11-13 08:35:49 INFO  consumer.c:48: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2024-11-13 08:37:14 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 08:37:14 INFO  packet.c:134: [send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2024-11-13 08:37:14 INFO  consumer.c:139: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.
+2024-11-13 08:37:14 INFO  consumer.c:164: [handle_consumer_ack(packet)] : Received payload for topic livingroom.temperature : Payload data for message 2.
+2024-11-13 08:37:22 INFO  consumer.c:48: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512

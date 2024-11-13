@@ -50,7 +50,7 @@ void free_direct_exchange(direct_exchange *exchange);
 // Topic exchange
 
 topic_exchange *create_topic_exchange();
-void topic_exch_insert_topic(topic_exchange *exchange, const char *topic);
+void topic_exch_insert_message(topic_exchange *exchange, message message, const char *topic);
 void topic_exch_insert_queue(topic_exchange *exchange, const char *topic, queue *q);
 queue *topic_exch_search_topic(topic_exchange *exchange, const char *topic);
 void topic_exch_print_trie(topic_exchange *exchange);

@@ -177,7 +177,7 @@ void handle_producer_publish(int socketFD, cJSON *json_payload)
 
         send_producer_ack_packet(socketFD);
 
-        topic_exch_insert_topic(topic_exch, topic);
+        topic_exch_insert_message(topic_exch, message, topic);
         topic_exch_print_trie(topic_exch);
     }
 }

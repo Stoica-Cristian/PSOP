@@ -25,7 +25,7 @@ trie_node *create_trie()
     return root;
 }
 
-void trie_insert_topic(trie_node *root, const char *topic)
+void trie_insert_topic(trie_node *root, message message, const char *topic)
 {
     trie_node *current_node = root;
     char *topic_copy = strdup(topic);
@@ -63,6 +63,7 @@ void trie_insert_topic(trie_node *root, const char *topic)
 
     current_node->is_end_of_topic = true;
     current_node->queues = create_queue(topic, "");
+    enqueue_message(current_node->queues, &message);
 
     free(topic_copy);
 }
@@ -86,7 +87,6 @@ trie_node *trie_search_topic(trie_node *root, const char *topic)
             if (current->children[i] &&
                 strcmp(current->children[i]->topic_part, part) == 0)
             {
-                printf("Found: %s\n", part);
                 current = current->children[i];
                 found = true;
                 break;

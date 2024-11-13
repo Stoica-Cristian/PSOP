@@ -61,9 +61,9 @@ topic_exchange *create_topic_exchange()
     return exchange;
 }
 
-void topic_exch_insert_topic(topic_exchange *exchange, const char *topic)
+void topic_exch_insert_message(topic_exchange *exchange, message message, const char *topic)
 {
-    trie_insert_topic(exchange->trie, topic);
+    trie_insert_topic(exchange->trie, message, topic);
 }
 
 void topic_exch_insert_queue(topic_exchange *exchange, const char *topic, queue *q)

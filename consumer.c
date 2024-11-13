@@ -22,7 +22,7 @@ int main()
     pthread_create(&id, NULL, process_packets, NULL);
 
     send_consumer_request_packet(socketFD, "direct", "key1");
-    // send_consumer_request_packet(socketFD, "topic", "livingroom.temperature"); some error here
+    send_consumer_request_packet(socketFD, "topic", "livingroom.temperature");
 
     pthread_join(id, NULL);
 

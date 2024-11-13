@@ -15,7 +15,7 @@ typedef struct trie_node
 
 trie_node *create_trie_node(const char *topic);
 trie_node *create_trie();
-void trie_insert_topic(trie_node *root, const char *topic);
+void trie_insert_topic(trie_node *root, message message, const char *topic);
 void trie_insert_queue(trie_node *root, const char *topic, queue *q);
 trie_node *trie_search_topic(trie_node *root, const char *topic);
 void print_trie(trie_node *root);
