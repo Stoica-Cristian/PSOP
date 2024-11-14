@@ -7,8 +7,8 @@ void *process_packets(void *arg);
 cJSON *parse_packet_payload_to_json(packet *packet);
 void assign_message_to_exchange(cJSON *json_payload);
 
-void handle_producer_publish(int socketFD, cJSON *json_payload);
-void handle_consumer_request(int socketFD, cJSON *json_payload);
+void handle_producer_publish(int socketFD, packet *packet_received);
+void handle_consumer_request(int socketFD, packet *packet_received);
 
 direct_exchange *direct_exch;
 topic_exchange *topic_exch;
@@ -64,6 +64,8 @@ void *process_packets(void *arg)
     {
         ssize_t bytes_received = recv(socketFD, &packet_received, MAX_PACKET_SIZE, 0);
 
+        print_packet(&packet_received);
+
         if (bytes_received == 0)
         {
             char ip_str[INET_ADDRSTRLEN];
@@ -81,23 +83,14 @@ void *process_packets(void *arg)
 
         if (bytes_received > 0)
         {
-            packet_received.payload[bytes_received - sizeof(packet_type)] = '\0';
-            cJSON *json_payload = parse_packet_payload_to_json(&packet_received);
-
-            if (!json_payload)
-            {
-                send_bad_format_packet(socketFD);
-                continue;
-            }
-
             switch (packet_received.packet_type)
             {
             case PKT_PRODUCER_PUBLISH:
-                handle_producer_publish(socketFD, json_payload);
+                handle_producer_publish(socketFD, &packet_received);
                 break;
 
             case PKT_CONSUMER_REQUEST:
-                handle_consumer_request(socketFD, json_payload);
+                handle_consumer_request(socketFD, &packet_received);
                 break;
 
             case PKT_UNKNOWN:
@@ -112,25 +105,35 @@ void *process_packets(void *arg)
 }
 
 /**
- * Assigns a message to an exchange based on the JSON payload.
+ * Handles a producer publish request based on the JSON payload.
  *
- * @param json_payload The JSON payload containing the message details.
+ * @param socketFD The socket file descriptor to send the response to.
+ * @param packet_received The packet containing the request details.
  */
-void handle_producer_publish(int socketFD, cJSON *json_payload)
+void handle_producer_publish(int socketFD, packet *packet_received)
 {
+    cJSON *json_payload = parse_packet_payload_to_json(packet_received);
+
+    if (!json_payload)
+    {
+        send_bad_format_packet(socketFD, &packet_received->id);
+        log_info("[handle_producer_publish(int, packet*)] : Error parsing JSON payload");
+        return;
+    }
+
     cJSON *type_item = cJSON_GetObjectItem(json_payload, "type");
     cJSON *payload_item = cJSON_GetObjectItem(json_payload, "payload");
 
     if (!payload_item)
     {
-        log_info("[assign_message_to_exchange(cJSON*)] : Missing 'payload' in JSON payload");
-        send_incomplete_packet(socketFD);
+        log_info("[handle_producer_publish(int, packet*)] : Missing 'payload' in JSON payload");
+        send_incomplete_packet(socketFD, &packet_received->id);
         return;
     }
     if (!type_item)
     {
-        log_info("[assign_message_to_exchange(cJSON*)] : Missing 'type' in JSON payload");
-        send_incomplete_packet(socketFD);
+        log_info("[handle_producer_publish(int, packet*)] : Missing 'type' in JSON payload");
+        send_incomplete_packet(socketFD, &packet_received->id);
         return;
     }
 
@@ -149,13 +152,13 @@ void handle_producer_publish(int socketFD, cJSON *json_payload)
 
         if (!key_item || !key_item->valuestring)
         {
-            log_info("[assign_message_to_exchange(cJSON*)] : 'key' is NULL");
-            send_incomplete_packet(socketFD);
+            log_info("[handle_producer_publish(int, packet*)] : 'key' is NULL");
+            send_incomplete_packet(socketFD, &packet_received->id);
             return;
         }
         const char *key = key_item->valuestring;
 
-        send_producer_ack_packet(socketFD);
+        send_producer_ack_packet(socketFD, &packet_received->id);
 
         direct_exch_insert_message(direct_exch, message, key);
         direct_exch_print_queues(direct_exch);
@@ -167,15 +170,15 @@ void handle_producer_publish(int socketFD, cJSON *json_payload)
 
         if (!topic_item || !topic_item->valuestring)
         {
-            log_info("[assign_message_to_exchange(cJSON*)] : 'topic' is NULL");
-            send_incomplete_packet(socketFD);
+            log_info("[handle_producer_publish(int, packet*)] : 'topic' is NULL");
+            send_incomplete_packet(socketFD, &packet_received->id);
             return;
         }
 
         const char *topic = topic_item->valuestring;
         message.type = MSG_TOPIC;
 
-        send_producer_ack_packet(socketFD);
+        send_producer_ack_packet(socketFD, &packet_received->id);
 
         topic_exch_insert_message(topic_exch, message, topic);
         topic_exch_print_trie(topic_exch);
@@ -186,16 +189,25 @@ void handle_producer_publish(int socketFD, cJSON *json_payload)
  * Handles a consumer request based on the JSON payload.
  *
  * @param socketFD The socket file descriptor to send the response to.
- * @param json_payload The JSON payload containing the request details.
+ * @param packet_received The packet containing the request details.
  */
-void handle_consumer_request(int socketFD, cJSON *json_payload)
+void handle_consumer_request(int socketFD, packet *packet_received)
 {
+    cJSON *json_payload = parse_packet_payload_to_json(packet_received);
+
+    if (!json_payload)
+    {
+        send_bad_format_packet(socketFD, &packet_received->id);
+        log_info("[handle_consumer_request(int, cJSON*)] : Error parsing JSON payload");
+        return;
+    }
+
     cJSON *type_item = cJSON_GetObjectItem(json_payload, "type");
 
     if (!type_item)
     {
         log_info("[handle_consumer_request(int, cJSON*)] : Missing 'type' in JSON payload");
-        send_incomplete_packet(socketFD);
+        send_incomplete_packet(socketFD, &packet_received->id);
         return;
     }
 
@@ -208,7 +220,7 @@ void handle_consumer_request(int socketFD, cJSON *json_payload)
         if (!key_item)
         {
             log_info("[handle_consumer_request(int, cJSON*)] : Missing 'key' in JSON payload");
-            send_incomplete_packet(socketFD);
+            send_incomplete_packet(socketFD, &packet_received->id);
             return;
         }
         const char *key = key_item->valuestring;
@@ -252,7 +264,7 @@ void handle_consumer_request(int socketFD, cJSON *json_payload)
         if (!topic_item)
         {
             log_info("[handle_consumer_request(int, cJSON*)] : Missing 'topic' in JSON payload");
-            send_incomplete_packet(socketFD);
+            send_incomplete_packet(socketFD, &packet_received->id);
             return;
         }
 

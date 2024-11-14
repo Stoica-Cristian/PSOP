@@ -1,11 +1,17 @@
 #include "socketutil.h"
 #include "utils.h"
 
-char **read_and_parse_json_from_file(const char *filename, int *message_count);
+#define MAX_RETRIES 3
+#define RETRY_DELAY 100000 // 100ms
+
 void *process_packets(void *);
 
 int socketFD;
 struct sockaddr_in *address;
+
+bool ack_received = false;
+unique_id current_id;
+int ack_count = 0;
 
 int main()
 {
@@ -16,10 +22,7 @@ int main()
 
     connect_to_server(socketFD, address);
 
-    //======================== test ===========================//
-
     int message_count;
-
     char **messages = read_and_parse_json_from_file("messages.json", &message_count);
 
     if (messages)
@@ -29,20 +32,47 @@ int main()
 
         for (int i = 0; i < message_count; i++)
         {
-            packet packet;
-            packet.packet_type = PKT_PRODUCER_PUBLISH;
-            strcpy(packet.payload, messages[i]);
-            send_packet(socketFD, &packet);
+            packet *packet = new_packet(PKT_PRODUCER_PUBLISH, messages[i]);
 
-            log_trace("Message %d: %s", i + 1, packet.payload);
+            current_id = packet->id;
+            ack_received = false;
+
+            int retries = 0;
+            while (retries < MAX_RETRIES)
+            {
+                printf("Sending packet: ");
+                print_uid(&current_id);
+                print_packet(packet);
+
+                send_packet(socketFD, packet);
+
+                usleep(RETRY_DELAY * (retries + 1));
+
+                if (ack_received)
+                {
+                    ack_count++;
+                    break;
+                }
+
+                retries++;
+                log_warn("No ACK received for packet %d, retrying (%d/%d)", i + 1, retries, MAX_RETRIES);
+            }
+
+            if (!ack_received)
+            {
+                log_error("Failed to send packet %d after %d retries", i + 1, MAX_RETRIES);
+            }
             free(messages[i]);
+            free(packet);
 
             usleep(100000); // 100ms
         }
+
+        log_info("Sent %d packets, received %d acks", message_count, ack_count);
+
         free(messages);
         pthread_join(id, NULL);
     }
-    //========================================================//
 
     close(socketFD);
     free(address);
@@ -81,7 +111,18 @@ void *process_packets(void *)
             switch (packet.packet_type)
             {
             case PKT_PRODUCER_ACK:
-                log_info("[process_packets(void*)] : ACK received");
+                if (uid_equals(&packet.id, &current_id))
+                {
+                    ack_received = true;
+
+                    char str[37];
+                    uid_to_string(&packet.id, str);
+                    log_info("[process_packets(void*)] : Received ACK for packet with ID: %s", str);
+                }
+                else
+                {
+                    log_warn("[process_packets(void*)] : Received ACK for unknown packet");
+                }
                 break;
             case PKT_BAD_FORMAT:
                 log_error("[process_packets(void*)] : Bad format packet received");
@@ -98,58 +139,4 @@ void *process_packets(void *)
     }
 
     return NULL;
-}
-
-char **read_and_parse_json_from_file(const char *filename, int *message_count)
-{
-    int fd = open(filename, O_RDONLY);
-
-    if (fd < 0)
-    {
-        log_error("[read_and_send_messages(const char*)] : &s", strerror(errno));
-        return NULL;
-    }
-
-    off_t length = lseek(fd, 0, SEEK_END);
-    lseek(fd, 0, SEEK_SET);
-
-    char *buffer = malloc(length + 1);
-
-    ssize_t bytes_read = read(fd, buffer, length);
-
-    if (bytes_read < 0)
-    {
-        perror("[read_and_send_messages(const char*)] ");
-        free(buffer);
-        close(fd);
-        return NULL;
-    }
-
-    buffer[bytes_read] = '\0';
-    close(fd);
-
-    cJSON *json = cJSON_Parse(buffer);
-    free(buffer);
-
-    if (!json)
-    {
-        fprintf(stderr, "[read_and_send_messages(const char*)] : Failed to parse JSON\n");
-        return NULL;
-    }
-
-    cJSON *messages = cJSON_GetObjectItem(json, "messages");
-
-    *message_count = cJSON_GetArraySize(messages);
-    char **message_array = malloc((*message_count) * sizeof(char *));
-
-    int i = 0;
-    cJSON *message;
-    cJSON_ArrayForEach(message, messages)
-    {
-        char *payload = cJSON_PrintUnformatted(message);
-        message_array[i++] = payload;
-    }
-
-    cJSON_Delete(json);
-    return message_array;
 }

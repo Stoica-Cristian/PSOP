@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "socketutil.h": "c",
-        "hash_table.h": "c"
-    }
-}
