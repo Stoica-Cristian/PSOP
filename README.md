@@ -241,9 +241,10 @@ classDiagram
     }
 
     class hash_node {
-        +char* key
-        +queue* queue
-        +hash_node* next
+        +char *binding_key;
+        +queue *queues;
+        +int current_queue_index;
+        +int queue_count;
     }
 
     class trie_node {
@@ -255,14 +256,6 @@ classDiagram
 
     class queue{
         ...
-    }
-
-    class exchange_type {
-        <<enumeration>>
-        EXCH_INVALID
-        EXCH_DIRECT
-        EXCH_FANOUT
-        EXCH_TOPIC
     }
 
     direct_exchange --> hash_table
@@ -291,4 +284,7 @@ Fanout_exchange:<br>
    - salvarea mesajelor pe disk pentru a asigura persistenta
 2. Consumer:
    - posibilitatea de a se abona la un anumit topic
+   - implementarea meniu care sa ofere utilizatorului posibilitatea de a crea cereri in linie de comanda
+3. Producer:
+   - implementarea meniu care sa ofere utilizatorului posibilitatea de a crea mesaje in linie de comanda
 ##
