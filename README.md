@@ -284,7 +284,7 @@ Fanout_exchange:<br>
    - salvarea mesajelor pe disk pentru a asigura persistenta
 2. Consumer:
    - posibilitatea de a se abona la un anumit topic
-   - implementarea meniu care sa ofere utilizatorului posibilitatea de a crea cereri in linie de comanda
+   - implementarea unui meniu care sa ofere utilizatorului posibilitatea de a crea cereri in linie de comanda
 3. Producer:
-   - implementarea meniu care sa ofere utilizatorului posibilitatea de a crea mesaje in linie de comanda
+   - implementarea unui meniu care sa ofere utilizatorului posibilitatea de a crea mesaje in linie de comanda
 ##
