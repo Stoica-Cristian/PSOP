@@ -25,9 +25,10 @@ make
 ```
 In urma executarii comenzii vor fi create cele trei executabile: **server**, **producer** si **consumer**
 
-⚠️ Proiectul foloseste biblioteca [libuuid](https://github.com/util-linux/util-linux/tree/master/libuuid).<br>
-Se recomanda instalarea ei, dar aceasta poate fi omisa deoarece este implementata o varianta proprie.<br>
-Biblioteca poate fi instalata astfel:<br>
+> [!WARNING]
+> Proiectul foloseste biblioteca [libuuid](https://github.com/util-linux/util-linux/tree/master/libuuid). 
+> <br> Se recomanda instalarea ei, dar aceasta poate fi omisa deoarece este implementata o varianta proprie.<br>
+> Biblioteca poate fi instalata astfel:<br>
 
 ### Debian, Ubuntu, Linux Mint
 ```bash
