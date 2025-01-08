@@ -2,7 +2,7 @@
 
 packet *new_packet(packet_type type, const char *payload)
 {
-    packet *packet = malloc(sizeof(packet));
+    packet *packet = malloc(sizeof(struct packet));
 
     if (!packet)
     {
@@ -36,6 +36,12 @@ char *packet_type_to_string(packet_type type)
 {
     switch (type)
     {
+    case PKT_AUTH:
+        return "PKT_AUTH";
+    case PKT_AUTH_SUCCESS:
+        return "PKT_AUTH_SUCCESS";
+    case PKT_AUTH_FAILURE:
+        return "PKT_AUTH_FAILURE";
     case PKT_BAD_FORMAT:
         return "PKT_BAD_FORMAT";
     case PKT_INCOMPLETE:
@@ -150,16 +156,13 @@ void send_incomplete_packet(int socketFD, const unique_id *uuid)
     log_info("[send_incomplete_packet(int)] : Incomplete packet sent");
 }
 
-void send_consumer_request_packet(int socketFD, const char *type, const char *identifier)
+void send_request_packet(int socketFD, const char *type, const char *identifier)
 {
     if (type == NULL || identifier == NULL || strlen(type) == 0 || strlen(identifier) == 0)
     {
-        log_error("[send_consumer_request_packet(int, const char*, const char*)] : Invalid type or identifier");
+        log_error("[send_request_packet(int, const char*, const char*)] : Invalid type or identifier");
         return;
     }
-
-    packet request_packet;
-    request_packet.packet_type = PKT_CONSUMER_REQUEST;
 
     cJSON *json_payload = cJSON_CreateObject();
 
@@ -175,18 +178,54 @@ void send_consumer_request_packet(int socketFD, const char *type, const char *id
     }
     else
     {
-        log_error("[send_consumer_request_packet(int, const char*, const char*)] : Unknown type");
+        log_error("[send_request_packet(int, const char*, const char*)] : Unknown type");
         cJSON_Delete(json_payload);
         return;
     }
 
     char *json_str = cJSON_PrintUnformatted(json_payload);
-    strncpy(request_packet.payload, json_str, sizeof(request_packet.payload) - 1);
+    packet request_packet = create_packet(PKT_CONSUMER_REQUEST, json_str);
+
+    print_packet(&request_packet);
+
     cJSON_Delete(json_payload);
 
     send_packet(socketFD, &request_packet);
 
-    log_info("[send_consumer_request_packet(int, const char*, const char*)] : Consumer request packet sent");
+    log_info("[send_request_packet(int, const char*, const char*)] : Consumer request packet sent");
+}
+
+void send_disconnect_packet(int socketFD, const unique_id *uuid)
+{
+    packet disconnect_packet;
+    disconnect_packet.packet_type = PKT_DISCONNECT;
+    copy_uid(&disconnect_packet.id, uuid);
+    send_packet(socketFD, &disconnect_packet);
+
+    log_info("[send_disconnect_packet(int)] : Disconnect packet sent");
+}
+
+void send_subscribe_packet(int socketFD, const char *topic)
+{
+    if (topic == NULL || strlen(topic) == 0)
+    {
+        log_error("[send_subscribe_packet(int, const char*)] : Invalid topic");
+        return;
+    }
+
+    cJSON *json_payload = cJSON_CreateObject();
+    cJSON_AddStringToObject(json_payload, "topic", topic);
+
+    char *json_str = cJSON_PrintUnformatted(json_payload);
+    packet subscribe_packet = create_packet(PKT_SUBSCRIBE, json_str);
+
+    print_packet(&subscribe_packet);
+
+    cJSON_Delete(json_payload);
+
+    send_packet(socketFD, &subscribe_packet);
+
+    log_info("[send_subscribe_packet(int, const char*)] : Subscribe packet sent");
 }
 
 void generate_custom_uid(char *custom_id)
@@ -223,6 +262,13 @@ void uid_to_string(const unique_id *id, char *str)
 #else
     strncpy(str, id->custom_id, 37);
 #endif
+}
+
+char *uid_to_string_malloc(const unique_id *id)
+{
+    char *str = malloc(37);
+    uid_to_string(id, str);
+    return str;
 }
 
 void print_uid(const unique_id *id)

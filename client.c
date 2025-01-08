@@ -1,28 +1,42 @@
 #include "socketutil.h"
 #include "utils.h"
 
-char *generate_json_request_key(const char *key);
-char *generate_json_request_topic(const char *topic);
+#define MAX_RETRIES 3
+#define RETRY_DELAY 100000 // 100ms
+
 void *process_packets(void *);
+void send_test_packets(int socketFD);
 void handle_consumer_ack(packet packet);
 
 int socketFD;
 struct sockaddr_in *address;
 
+bool ack_received = false;
+unique_id current_id;
+int ack_count = 0;
+
 int main()
 {
-    set_log_file("consumer_log.txt", LOG_TRACE);
+    set_log_file("client.log", LOG_TRACE);
 
     socketFD = create_tcp_ipv4_socket();
     address = create_ipv4_address("127.0.0.1", 8080);
+    
+    connect_to_server_auth(socketFD, address, "admin", "admin");
 
-    connect_to_server(socketFD, address);
+    printf("Connected to server\n");
 
     pthread_t id;
     pthread_create(&id, NULL, process_packets, NULL);
 
-    send_consumer_request_packet(socketFD, "direct", "key1");
-    send_consumer_request_packet(socketFD, "topic", "livingroom.temperature");
+    send_test_packets(socketFD);
+
+    printf("Sending consumer request packets\n");
+
+    send_request_packet(socketFD, "direct", "key1");
+    send_request_packet(socketFD, "topic", "livingroom.temperature");
+
+    send_subscribe_packet(socketFD, "livingroom.temperature");
 
     pthread_join(id, NULL);
 
@@ -58,12 +72,37 @@ void *process_packets(void *)
 
         if (bytes_received > 0)
         {
-            packet.payload[bytes_received - sizeof(packet_type)] = '\0';
+            // modificat fara testare
+            packet.payload[bytes_received - sizeof(packet_type) - sizeof(unique_id)] = '\0';
 
             switch (packet.packet_type)
             {
+            case PKT_PRODUCER_ACK:
+                if (uid_equals(&packet.id, &current_id))
+                {
+                    ack_received = true;
+
+                    char str[37];
+                    uid_to_string(&packet.id, str);
+                    log_info("[process_packets(void*)] : Received ACK for packet with ID: %s", str);
+                }
+                else
+                {
+                    log_warn("[process_packets(void*)] : Received ACK for unknown packet");
+                }
+                break;
+
             case PKT_CONSUMER_RESPONSE:
+                print_packet(&packet);
                 handle_consumer_ack(packet);
+                break;
+
+            case PKT_BAD_FORMAT:
+                log_error("[process_packets(void*)] : Bad format packet received");
+                break;
+
+            case PKT_INCOMPLETE:
+                log_error("[process_packets(void*)] : Incomplete packet received");
                 break;
 
             case PKT_UNKNOWN:
@@ -76,28 +115,58 @@ void *process_packets(void *)
     return NULL;
 }
 
-char *generate_json_request_key(const char *key)
+void send_test_packets(int socketFD)
 {
-    cJSON *json = cJSON_CreateObject();
-    cJSON_AddStringToObject(json, "type", "direct");
-    cJSON_AddStringToObject(json, "key", key);
+    int message_count;
+    char **messages = read_and_parse_json_from_file("messages.json", &message_count);
 
-    char *json_str = cJSON_PrintUnformatted(json);
-    cJSON_Delete(json);
+    if (messages)
+    {
+        // pthread_t id;
+        // pthread_create(&id, NULL, process_packets, NULL);
 
-    return json_str;
-}
+        for (int i = 0; i < message_count; i++)
+        {
+            packet *packet = new_packet(PKT_PRODUCER_PUBLISH, messages[i]);
 
-char *generate_json_request_topic(const char *topic)
-{
-    cJSON *json = cJSON_CreateObject();
-    cJSON_AddStringToObject(json, "type", "topic");
-    cJSON_AddStringToObject(json, "topic", topic);
+            current_id = packet->id;
+            ack_received = false;
 
-    char *json_str = cJSON_PrintUnformatted(json);
-    cJSON_Delete(json);
+            int retries = 0;
+            while (retries < MAX_RETRIES)
+            {
+                // printf("Sending packet: ");
+                // print_uid(&current_id);
+                // print_packet(packet);
 
-    return json_str;
+                send_packet(socketFD, packet);
+
+                usleep(RETRY_DELAY * (retries + 1));
+
+                if (ack_received)
+                {
+                    ack_count++;
+                    break;
+                }
+
+                retries++;
+                log_warn("No ACK received for packet %d, retrying (%d/%d)", i + 1, retries, MAX_RETRIES);
+            }
+
+            if (!ack_received)
+            {
+                log_error("Failed to send packet %d after %d retries", i + 1, MAX_RETRIES);
+            }
+            free(messages[i]);
+            free(packet);
+
+            usleep(100000); // 100ms
+        }
+
+        log_info("Sent %d packets, received %d acks", message_count, ack_count);
+
+        free(messages);
+    }
 }
 
 void handle_consumer_ack(packet packet)
@@ -166,4 +235,3 @@ void handle_consumer_ack(packet packet)
 
     cJSON_Delete(json_payload);
 }
-

@@ -1,0 +1,22 @@
+{
+    "files.associations": {
+        "compare": "cpp",
+        "type_traits": "cpp",
+        "socketutil.h": "c",
+        "packet.h": "c",
+        "utils.h": "c",
+        "exchange.h": "c",
+        "socket.h": "c",
+        "pthread.h": "c",
+        "user.h": "c",
+        "log.h": "c",
+        "cjson.h": "c",
+        "stdio.h": "c",
+        "hash_table.h": "c",
+        "trie.h": "c",
+        "queue.h": "c",
+        "string.h": "c",
+        "stdlib.h": "c",
+        "fcntl.h": "c"
+    }
+}

@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 
-OBJ = socketutil.o queue.o cJSON.o log.o utils.o packet.o exchange.o hash_table.o trie.o
+OBJ = socketutil.o queue.o cJSON.o log.o utils.o packet.o exchange.o hash_table.o trie.o user.o
 
 ifeq ($(shell pkg-config --exists uuid && echo yes),yes)
     CFLAGS += $(shell pkg-config --cflags uuid)
@@ -11,16 +11,13 @@ else
     USE_UUID = 0
 endif
 
-all: producer server consumer clean_obj
+all: client server clean_obj
 
-producer: producer.c $(OBJ)
-	$(CC) $(CFLAGS) -o producer producer.c $(OBJ) $(LDLIBS)
+client: client.c $(OBJ)
+	$(CC) $(CFLAGS) -o client client.c $(OBJ) $(LDLIBS)
 
 server: server.c $(OBJ)
 	$(CC) $(CFLAGS) -o server server.c $(OBJ) $(LDLIBS)
-
-consumer: consumer.c $(OBJ)
-	$(CC) $(CFLAGS) -o consumer consumer.c $(OBJ) $(LDLIBS)
 
 %.o: %.c %.h
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -32,9 +29,9 @@ clean_obj:
 	rm -f *.o
 
 clean:
-	rm -f producer server consumer *.o
+	rm -f client server *.o
 
 clean_logs:
-	rm -f producer_log.txt server_log.txt consumer_log.txt
+	rm -f *.log
 
 .PHONY: all clean clean_obj

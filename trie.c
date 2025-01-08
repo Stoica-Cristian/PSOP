@@ -13,6 +13,8 @@ trie_node *create_trie_node(const char *topic)
         root->children[i] = NULL;
     }
 
+    initialize_users(&root->subscribers);
+
     return root;
 }
 
@@ -77,7 +79,7 @@ trie_node *trie_search_topic(trie_node *root, const char *topic)
     trie_node *current = root;
     char *topic_copy = strdup(topic);
     char *part = strtok(topic_copy, ".");
- 
+
     while (part)
     {
         bool found = false;
@@ -175,4 +177,43 @@ void free_trie(trie_node *root)
     free_queue(root->queue);
     free(root->topic_part);
     free(root);
+}
+
+void trie_insert_subscriber(trie_node *root, const char *topic, user *subscriber)
+{
+    trie_node *node = trie_search_topic(root, topic);
+
+    if (node)
+    {
+        add_user(node->subscribers, subscriber);
+    }
+
+    trie_print_subscribers(root);
+}
+
+void trie_print_subscribers_helper(trie_node *node)
+{
+    if (node == NULL)
+    {
+        return;
+    }
+
+    if (node->is_end_of_topic)
+    {
+        printf("Subscribers for topic '%s':\n", node->topic_part);
+        print_users(node->subscribers);
+    }
+
+    for (int i = 0; i < MAX_CHILDREN; i++)
+    {
+        if (node->children[i])
+        {
+            trie_print_subscribers_helper(node->children[i]);
+        }
+    }
+}
+
+void trie_print_subscribers(trie_node *root)
+{
+    trie_print_subscribers_helper(root);
 }

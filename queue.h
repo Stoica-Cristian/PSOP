@@ -57,4 +57,16 @@ void print_queue(queue *q);
 void print_queues(queue *q);
 void free_queue(queue *q);
 
+
+//======================= User Queue ========================//
+
+// typedef struct subscriber
+// {
+//     char username[50];
+//     char password[50];
+//     struct user *next;
+// } subscriber;
+
+// subscriber* c()
+
 #endif

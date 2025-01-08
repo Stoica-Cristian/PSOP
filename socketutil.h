@@ -13,8 +13,7 @@
 #include <pthread.h>
 #include <errno.h>
 
-#include "cJSON.h"
-#include "log.h"
+#include "packet.h"
 
 int create_tcp_ipv4_socket();
 struct sockaddr_in* create_ipv4_address(char* ip, int port);
@@ -27,6 +26,9 @@ typedef struct
     struct sockaddr_in address;
     int error;
     bool acceptedSuccessfully;
+    bool isAuth;
+    char username[50];
+    char password[50];
 } client_connection;
 
 void bind_socket(int serverSocketFD, struct sockaddr_in* address);
@@ -40,5 +42,6 @@ client_connection* accept_incoming_connection(int serverSocketFD);
 //=================== Client Side ==============================
 
 void connect_to_server(int serverSocketFD, struct sockaddr_in* address);
+void connect_to_server_auth(int socketFD, struct sockaddr_in *address, char *username, char *password);
 
 #endif

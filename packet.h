@@ -1,5 +1,5 @@
 #ifndef PACKET_H
-#define PACKEt_H
+#define PACKET_H
 
 #include <stdio.h>
 #include <sys/socket.h>
@@ -41,6 +41,8 @@ typedef struct unique_id
 void generate_custom_uid(char *custom_id);
 void generate_uid(unique_id *id);
 void uid_to_string(const unique_id *id, char *str);
+char *uid_to_string_malloc(const unique_id *id);
+
 void print_uid(const unique_id *id);
 void copy_uid(unique_id *dest, const unique_id *src);
 bool uid_equals(const unique_id *uid1, const unique_id *uid2);
@@ -60,6 +62,12 @@ typedef enum packet_type
     PKT_CONSUMER_RESPONSE,
     PKT_CONSUMER_ACK,
     PKT_CONSUMER_NACK,
+    PKT_AUTH,
+    PKT_AUTH_SUCCESS,
+    PKT_AUTH_FAILURE,
+    PKT_DISCONNECT,
+    PKT_DISCONNECT_ACK,
+    PKT_SUBSCRIBE,
 } packet_type;
 
 typedef struct packet
@@ -81,6 +89,8 @@ void send_packet(int socketfd, packet *packet);
 void send_bad_format_packet(int socketFD, const unique_id *uuid);
 void send_producer_ack_packet(int socketFD, const unique_id *uuid);
 void send_incomplete_packet(int socketFD, const unique_id *uuid);
-void send_consumer_request_packet(int socketFD, const char *type, const char *identifier);
+void send_request_packet(int socketFD, const char *type, const char *identifier);
+void send_disconnect_packet(int socketFD, const unique_id *uuid);
+void send_subscribe_packet(int socketFD, const char *topic);
 
 #endif
