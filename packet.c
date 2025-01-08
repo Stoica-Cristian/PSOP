@@ -62,6 +62,12 @@ char *packet_type_to_string(packet_type type)
         return "PKT_CONSUMER_ACK";
     case PKT_CONSUMER_NACK:
         return "PKT_CONSUMER_NACK";
+    case PKT_DISCONNECT:
+        return "PKT_DISCONNECT";
+    case PKT_DISCONNECT_ACK:
+        return "PKT_DISCONNECT_ACK";
+    case PKT_SUBSCRIBE:
+        return "PKT_SUBSCRIBE";
     case PKT_UNKNOWN:
     default:
         return "PKT_UNKNOWN";
@@ -186,8 +192,6 @@ void send_request_packet(int socketFD, const char *type, const char *identifier)
     char *json_str = cJSON_PrintUnformatted(json_payload);
     packet request_packet = create_packet(PKT_CONSUMER_REQUEST, json_str);
 
-    print_packet(&request_packet);
-
     cJSON_Delete(json_payload);
 
     send_packet(socketFD, &request_packet);
@@ -218,8 +222,6 @@ void send_subscribe_packet(int socketFD, const char *topic)
 
     char *json_str = cJSON_PrintUnformatted(json_payload);
     packet subscribe_packet = create_packet(PKT_SUBSCRIBE, json_str);
-
-    print_packet(&subscribe_packet);
 
     cJSON_Delete(json_payload);
 

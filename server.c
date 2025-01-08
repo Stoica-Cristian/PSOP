@@ -304,7 +304,7 @@ void handle_consumer_request(int socketFD, packet *packet_received)
         free(json_response_str);
 
         send_packet(socketFD, &response_packet);
-        print_packet(&response_packet);
+        // print_packet(&response_packet);
     }
 
     if (strcmp(type, "topic") == 0)
@@ -363,7 +363,7 @@ void handle_subscribe(int socketFD, packet *packet_received, client_connection *
     if (!json_payload)
     {
         send_bad_format_packet(socketFD, &packet_received->id);
-        log_info("[handle_subscribe(int, cJSON*)] : Error parsing JSON payload");
+        log_info("[handle_subscribe(int, packet*, client_connection*)] : Error parsing JSON payload");
         return;
     }
 
@@ -371,7 +371,7 @@ void handle_subscribe(int socketFD, packet *packet_received, client_connection *
 
     if (!topic_item)
     {
-        log_info("[handle_subscribe(int, cJSON*)] : Missing 'topic' in JSON payload");
+        log_info("[handle_subscribe(int, packet*, client_connection*)] : Missing 'topic' in JSON payload");
         send_incomplete_packet(socketFD, &packet_received->id);
         return;
     }
@@ -379,8 +379,6 @@ void handle_subscribe(int socketFD, packet *packet_received, client_connection *
     const char *topic = topic_item->valuestring;
 
     trie_insert_subscriber(topic_exch->trie, topic, find_user(users, established_connection->username));
-    
-    log_info("[handle_subscribe(int, cJSON*)] : User %s subscribed to topic %s", established_connection->username, topic);
 }
 
 /**

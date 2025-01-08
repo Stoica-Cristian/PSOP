@@ -164,3 +164,169 @@
 2025-01-08 08:28:22 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
 2025-01-08 08:28:23 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
 2025-01-08 08:28:34 INFO  server.c:119: [process_packets(void*)] : Connection closed by client with address 127.0.0.1 and port 51684
+2025-01-08 20:14:08 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2025-01-08 20:14:08 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2025-01-08 20:14:34 INFO  server.c:463: [handle_user_authentication(int, packet*)] : User admin registered successfully
+2025-01-08 20:14:34 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:14:34 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:14:34 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:14:35 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:14:35 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:14:35 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:14:36 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:14:36 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:14:36 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:15:18 INFO  server.c:119: [process_packets(void*)] : Connection closed by client with address 127.0.0.1 and port 48030
+2025-01-08 20:16:36 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2025-01-08 20:16:36 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2025-01-08 20:16:37 INFO  server.c:466: [handle_user_authentication(int, packet*)] : User admin registered successfully
+2025-01-08 20:16:37 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:16:37 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:16:37 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:16:38 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:16:38 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:16:39 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:16:39 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:16:39 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:16:39 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:17:13 INFO  server.c:119: [process_packets(void*)] : Connection closed by client with address 127.0.0.1 and port 33096
+2025-01-08 20:17:40 INFO  server.c:453: [handle_user_authentication(int, packet*)] : User admin authenticated successfully
+2025-01-08 20:17:40 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:17:41 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:17:41 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:17:42 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:17:42 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:17:42 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:17:42 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:17:43 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:17:43 INFO  packet.c:146: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:18:00 INFO  server.c:119: [process_packets(void*)] : Connection closed by client with address 127.0.0.1 and port 46920
+2025-01-08 20:19:16 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2025-01-08 20:19:16 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2025-01-08 20:19:19 INFO  server.c:466: [handle_user_authentication(int, packet*)] : User admin registered successfully
+2025-01-08 20:19:19 DEBUG server.c:361: [handle_subscribe(int, packet*, client_connection*)] : Entered function
+2025-01-08 20:19:19 DEBUG server.c:382: [handle_subscribe(int, packet*, client_connection*)] : Topic to subscribe: livingroom.temperature
+2025-01-08 20:19:19 INFO  server.c:386: [handle_subscribe(int, packet*, client_connection*)] : User admin subscribed to topic livingroom.temperature
+2025-01-08 20:28:52 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2025-01-08 20:28:52 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2025-01-08 20:28:55 INFO  server.c:466: [handle_user_authentication(int, packet*)] : User admin registered successfully
+2025-01-08 20:28:55 DEBUG server.c:361: [handle_subscribe(int, packet*, client_connection*)] : Entered function
+2025-01-08 20:28:55 DEBUG server.c:382: [handle_subscribe(int, packet*, client_connection*)] : Topic to subscribe: livingroom.temperature
+2025-01-08 20:28:55 INFO  server.c:386: [handle_subscribe(int, packet*, client_connection*)] : User admin subscribed to topic livingroom.temperature
+2025-01-08 20:38:37 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2025-01-08 20:38:37 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2025-01-08 20:38:40 INFO  server.c:466: [handle_user_authentication(int, packet*)] : User admin registered successfully
+2025-01-08 20:38:40 DEBUG server.c:361: [handle_subscribe(int, packet*, client_connection*)] : Entered function
+2025-01-08 20:38:40 DEBUG server.c:382: [handle_subscribe(int, packet*, client_connection*)] : Topic to subscribe: livingroom.temperature
+2025-01-08 20:38:40 INFO  server.c:386: [handle_subscribe(int, packet*, client_connection*)] : User "admin" subscribed to topic livingroom.temperature
+2025-01-08 20:44:03 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2025-01-08 20:44:03 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2025-01-08 20:44:05 INFO  server.c:466: [handle_user_authentication(int, packet*)] : User admin registered successfully
+2025-01-08 20:44:05 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:44:05 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:44:05 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:44:06 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:44:07 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:44:07 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:44:07 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:44:07 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:44:07 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:44:08 DEBUG server.c:361: [handle_subscribe(int, packet*, client_connection*)] : Entered function
+2025-01-08 20:44:08 DEBUG server.c:382: [handle_subscribe(int, packet*, client_connection*)] : Topic to subscribe: livingroom.temperature
+2025-01-08 20:44:08 INFO  server.c:386: [handle_subscribe(int, packet*, client_connection*)] : User "admin" subscribed to topic livingroom.temperature
+2025-01-08 20:44:32 FATAL socketutil.c:49: [bindSocket(int, struct sockaddr_in *)] : Address already in use
+2025-01-08 20:48:12 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2025-01-08 20:48:12 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2025-01-08 20:48:16 INFO  server.c:466: [handle_user_authentication(int, packet*)] : User admin registered successfully
+2025-01-08 20:48:16 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:48:16 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:48:16 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:48:17 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:48:17 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:48:17 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:48:17 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:48:18 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:48:18 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:48:18 DEBUG server.c:361: [handle_subscribe(int, packet*, client_connection*)] : Entered function
+2025-01-08 20:48:18 DEBUG server.c:382: [handle_subscribe(int, packet*, client_connection*)] : Topic to subscribe: livingroom.temperature
+2025-01-08 20:48:18 INFO  server.c:386: [handle_subscribe(int, packet*, client_connection*)] : User "admin" subscribed to topic livingroom.temperature
+2025-01-08 20:49:53 INFO  server.c:453: [handle_user_authentication(int, packet*)] : User admin authenticated successfully
+2025-01-08 20:49:53 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:49:54 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:49:54 INFO  trie.c:81: Message sent to subscriber: admin
+
+2025-01-08 20:49:54 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:49:55 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:49:55 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:49:55 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:49:55 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:49:56 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:49:56 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 20:49:56 DEBUG server.c:361: [handle_subscribe(int, packet*, client_connection*)] : Entered function
+2025-01-08 20:49:56 DEBUG server.c:382: [handle_subscribe(int, packet*, client_connection*)] : Topic to subscribe: livingroom.temperature
+2025-01-08 20:49:56 INFO  server.c:386: [handle_subscribe(int, packet*, client_connection*)] : User "admin" subscribed to topic livingroom.temperature
+2025-01-08 21:01:33 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2025-01-08 21:01:33 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2025-01-08 21:01:35 INFO  server.c:466: [handle_user_authentication(int, packet*)] : User admin registered successfully
+2025-01-08 21:01:35 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:01:35 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:01:35 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:01:36 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:01:36 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:01:37 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:01:37 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:01:37 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:01:37 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:01:37 DEBUG server.c:361: [handle_subscribe(int, packet*, client_connection*)] : Entered function
+2025-01-08 21:01:37 DEBUG server.c:382: [handle_subscribe(int, packet*, client_connection*)] : Topic to subscribe: livingroom.temperature
+2025-01-08 21:01:37 INFO  trie.c:220: User admin subscribed to topic: livingroom.temperature
+2025-01-08 21:01:37 INFO  server.c:386: [handle_subscribe(int, packet*, client_connection*)] : User "admin" subscribed to topic livingroom.temperature
+2025-01-08 21:03:26 INFO  server.c:453: [handle_user_authentication(int, packet*)] : User admin authenticated successfully
+2025-01-08 21:03:26 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:03:26 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:03:26 INFO  trie.c:84: Message sent to subscriber: admin
+
+2025-01-08 21:03:26 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:03:27 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:03:28 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:03:28 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:03:28 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:03:28 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:03:28 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:03:29 DEBUG server.c:361: [handle_subscribe(int, packet*, client_connection*)] : Entered function
+2025-01-08 21:03:29 DEBUG server.c:382: [handle_subscribe(int, packet*, client_connection*)] : Topic to subscribe: livingroom.temperature
+2025-01-08 21:03:29 INFO  trie.c:212: User admin is already subscribed to topic: livingroom.temperature
+2025-01-08 21:03:29 INFO  server.c:386: [handle_subscribe(int, packet*, client_connection*)] : User "admin" subscribed to topic livingroom.temperature
+2025-01-08 21:05:50 TRACE socketutil.c:45: [bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully
+2025-01-08 21:05:50 TRACE socketutil.c:60: [listenForConnections(int)] : Socket is listening...
+2025-01-08 21:05:53 INFO  server.c:466: [handle_user_authentication(int, packet*)] : User admin registered successfully
+2025-01-08 21:05:53 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:05:53 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:05:53 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:05:54 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:05:54 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:05:55 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:05:55 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:05:55 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:05:55 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:05:55 DEBUG server.c:361: [handle_subscribe(int, packet*, client_connection*)] : Entered function
+2025-01-08 21:05:55 DEBUG server.c:382: [handle_subscribe(int, packet*, client_connection*)] : Topic to subscribe: livingroom.temperature
+2025-01-08 21:05:55 INFO  trie.c:220: User admin subscribed to topic: livingroom.temperature
+2025-01-08 21:05:55 INFO  server.c:386: [handle_subscribe(int, packet*, client_connection*)] : User "admin" subscribed to topic livingroom.temperature
+2025-01-08 21:06:11 INFO  server.c:119: [process_packets(void*)] : Connection closed by client with address 127.0.0.1 and port 46464
+2025-01-08 21:06:16 INFO  server.c:453: [handle_user_authentication(int, packet*)] : User admin authenticated successfully
+2025-01-08 21:06:16 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:06:16 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:06:16 INFO  trie.c:84: Message sent to subscriber: admin
+
+2025-01-08 21:06:16 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:06:17 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:06:17 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:06:17 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:06:18 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:06:18 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:06:18 INFO  packet.c:152: [send_producer_ack_packet(int)] : Producer ACK packet sent
+2025-01-08 21:06:18 DEBUG server.c:361: [handle_subscribe(int, packet*, client_connection*)] : Entered function
+2025-01-08 21:06:18 DEBUG server.c:382: [handle_subscribe(int, packet*, client_connection*)] : Topic to subscribe: livingroom.temperature
+2025-01-08 21:06:18 INFO  trie.c:212: User admin is already subscribed to topic: livingroom.temperature
+2025-01-08 21:06:18 INFO  server.c:386: [handle_subscribe(int, packet*, client_connection*)] : User "admin" subscribed to topic livingroom.temperature

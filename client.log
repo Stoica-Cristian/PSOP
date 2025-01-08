@@ -219,3 +219,197 @@
 2025-01-08 08:28:23 INFO  packet.c:195: [send_request_packet(int, const char*, const char*)] : Consumer request packet sent
 2025-01-08 08:28:23 INFO  client.c:206: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.
 2025-01-08 08:28:23 INFO  client.c:231: [handle_consumer_ack(packet)] : Received payload for topic livingroom.temperature : Payload data for message 2.
+2025-01-08 20:14:34 INFO  socketutil.c:154: [connectToServerAuth(int, struct sockaddr_in *, char *, char *)] : Auth success
+2025-01-08 20:14:34 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 4179e748-5bd0-4ad7-b771-33628f3fcdc9
+2025-01-08 20:14:34 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: e6c68e6c-d416-4aed-bfba-04c8ba1a9ef1
+2025-01-08 20:14:34 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: b398f558-7cc7-4145-8359-f805686c3a17
+2025-01-08 20:14:34 WARN  client.c:153: No ACK received for packet 4, retrying (1/3)
+2025-01-08 20:14:35 WARN  client.c:153: No ACK received for packet 4, retrying (2/3)
+2025-01-08 20:14:35 WARN  client.c:153: No ACK received for packet 4, retrying (3/3)
+2025-01-08 20:14:35 ERROR client.c:158: Failed to send packet 4 after 3 retries
+2025-01-08 20:14:35 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 1bcc691e-0118-447b-8757-004a92cff5a3
+2025-01-08 20:14:35 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 725c417d-c495-4508-b2b2-0ba3176b1da8
+2025-01-08 20:14:35 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: fd8e3c38-8050-4631-8e3c-440bca5dd6b7
+2025-01-08 20:14:36 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 19848d0e-b877-4e8c-8a76-4b7d10399850
+2025-01-08 20:14:36 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 698c848a-e966-4015-b37b-1ade0478cefd
+2025-01-08 20:14:36 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: c1fbe56c-ad76-4ec8-8ecc-6acfe9e9ab8f
+2025-01-08 20:14:36 INFO  client.c:166: Sent 10 packets, received 9 acks
+2025-01-08 20:14:36 INFO  packet.c:195: [send_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2025-01-08 20:14:36 INFO  packet.c:195: [send_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2025-01-08 20:14:36 INFO  packet.c:228: [send_subscribe_packet(int, const char*)] : Subscribe packet sent
+2025-01-08 20:14:36 INFO  client.c:208: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.
+2025-01-08 20:14:36 INFO  client.c:233: [handle_consumer_ack(packet)] : Received payload for topic livingroom.temperature : Payload data for message 2.
+2025-01-08 20:16:37 INFO  socketutil.c:154: [connectToServerAuth(int, struct sockaddr_in *, char *, char *)] : Auth success
+2025-01-08 20:16:37 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: a2733bb1-94b5-4310-af9e-97d4428bdb23
+2025-01-08 20:16:37 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 03164f82-5afd-4477-a13f-e7a9a6e56024
+2025-01-08 20:16:37 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 188a0664-8ab3-493e-85ad-e9354218eb3e
+2025-01-08 20:16:38 WARN  client.c:153: No ACK received for packet 4, retrying (1/3)
+2025-01-08 20:16:38 WARN  client.c:153: No ACK received for packet 4, retrying (2/3)
+2025-01-08 20:16:38 WARN  client.c:153: No ACK received for packet 4, retrying (3/3)
+2025-01-08 20:16:38 ERROR client.c:158: Failed to send packet 4 after 3 retries
+2025-01-08 20:16:38 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 37d8daa9-0edc-4946-bc1f-d7379a253679
+2025-01-08 20:16:38 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: ce8dcac6-3777-46f1-9771-c96029138384
+2025-01-08 20:16:39 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 6a4b538e-8179-4376-89d1-c02eab743395
+2025-01-08 20:16:39 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 4f1188b6-ab8b-46fa-b1d8-afb094fafbd1
+2025-01-08 20:16:39 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 131dfaef-74c3-4877-a0aa-68c8fc4941aa
+2025-01-08 20:16:39 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: d736b713-e1d5-4e59-9b5c-0a67693d1e1a
+2025-01-08 20:16:39 INFO  client.c:166: Sent 10 packets, received 9 acks
+2025-01-08 20:16:39 INFO  packet.c:195: [send_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2025-01-08 20:16:39 INFO  packet.c:195: [send_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2025-01-08 20:16:39 INFO  packet.c:228: [send_subscribe_packet(int, const char*)] : Subscribe packet sent
+2025-01-08 20:16:39 INFO  client.c:208: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.
+2025-01-08 20:16:39 INFO  client.c:233: [handle_consumer_ack(packet)] : Received payload for topic livingroom.temperature : Payload data for message 2.
+2025-01-08 20:17:40 INFO  socketutil.c:154: [connectToServerAuth(int, struct sockaddr_in *, char *, char *)] : Auth success
+2025-01-08 20:17:40 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 16702fee-e7f0-4b43-9715-a00a979ad43b
+2025-01-08 20:17:41 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 3992f026-3201-47bf-a131-d3d9f82166da
+2025-01-08 20:17:41 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 8f864b59-2e05-4d5a-b41e-f6a296dc7894
+2025-01-08 20:17:41 WARN  client.c:153: No ACK received for packet 4, retrying (1/3)
+2025-01-08 20:17:41 WARN  client.c:153: No ACK received for packet 4, retrying (2/3)
+2025-01-08 20:17:42 WARN  client.c:153: No ACK received for packet 4, retrying (3/3)
+2025-01-08 20:17:42 ERROR client.c:158: Failed to send packet 4 after 3 retries
+2025-01-08 20:17:42 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 7f2f9109-2e71-4208-ae16-4cb5c96a1a87
+2025-01-08 20:17:42 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 9c870ed2-7ba8-4fdc-b0f4-a6bc17d66eac
+2025-01-08 20:17:42 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 8492d05c-4266-4684-92b5-bbbfe91bcb22
+2025-01-08 20:17:42 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: 8b7551a3-787b-4564-a340-8e940278a442
+2025-01-08 20:17:43 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: dfbaa756-bf45-4127-a632-8ce47bb6dd42
+2025-01-08 20:17:43 INFO  client.c:87: [process_packets(void*)] : Received ACK for packet with ID: c426f40a-5b70-4b14-89cb-9350cb64b248
+2025-01-08 20:17:43 INFO  client.c:166: Sent 10 packets, received 9 acks
+2025-01-08 20:17:43 INFO  packet.c:195: [send_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2025-01-08 20:17:43 INFO  packet.c:195: [send_request_packet(int, const char*, const char*)] : Consumer request packet sent
+2025-01-08 20:17:43 INFO  packet.c:228: [send_subscribe_packet(int, const char*)] : Subscribe packet sent
+2025-01-08 20:17:43 INFO  client.c:208: [handle_consumer_ack(packet)] : Received payload for key key1 : Payload data for message 1.
+2025-01-08 20:17:43 INFO  client.c:233: [handle_consumer_ack(packet)] : Received payload for topic livingroom.temperature : Payload data for message 2.
+2025-01-08 20:19:19 INFO  socketutil.c:154: [connectToServerAuth(int, struct sockaddr_in *, char *, char *)] : Auth success
+2025-01-08 20:19:19 INFO  packet.c:228: [send_subscribe_packet(int, const char*)] : Subscribe packet sent
+2025-01-08 20:20:16 INFO  client.c:62: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2025-01-08 20:28:55 INFO  socketutil.c:154: [connectToServerAuth(int, struct sockaddr_in *, char *, char *)] : Auth success
+2025-01-08 20:28:55 INFO  packet.c:230: [send_subscribe_packet(int, const char*)] : Subscribe packet sent
+2025-01-08 20:29:23 INFO  client.c:55: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2025-01-08 20:38:40 INFO  socketutil.c:154: [connectToServerAuth(int, struct sockaddr_in *, char *, char *)] : Auth success
+2025-01-08 20:38:40 INFO  packet.c:230: [send_subscribe_packet(int, const char*)] : Subscribe packet sent
+2025-01-08 20:38:56 INFO  client.c:55: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2025-01-08 20:44:05 INFO  socketutil.c:154: [connectToServerAuth(int, struct sockaddr_in *, char *, char *)] : Auth success
+2025-01-08 20:44:05 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 03219668-ffc4-4f04-b8b4-5bc1e6f9da6c
+2025-01-08 20:44:05 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 93bd0800-c655-46e0-8fe6-bab857b66b95
+2025-01-08 20:44:05 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 55ae1005-fc28-466d-ad62-ab52e3da3bb1
+2025-01-08 20:44:06 WARN  client.c:148: No ACK received for packet 4, retrying (1/3)
+2025-01-08 20:44:06 WARN  client.c:148: No ACK received for packet 4, retrying (2/3)
+2025-01-08 20:44:06 WARN  client.c:148: No ACK received for packet 4, retrying (3/3)
+2025-01-08 20:44:06 ERROR client.c:153: Failed to send packet 4 after 3 retries
+2025-01-08 20:44:06 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 778e241a-f394-4a5f-b095-a4b7b4270457
+2025-01-08 20:44:07 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 5aec6127-5ac5-4d00-bcdc-4800a9bbf779
+2025-01-08 20:44:07 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 041e09f0-b2fc-4982-88c7-c75324c2d6b3
+2025-01-08 20:44:07 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 5a08ae3b-609c-4e60-8865-75ca0ce0260b
+2025-01-08 20:44:07 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 4df72c75-d5d3-4627-946b-c32331ec83d6
+2025-01-08 20:44:07 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 6f1dd6e7-3379-4573-a1bc-c0aede096051
+2025-01-08 20:44:08 INFO  client.c:161: Sent 10 packets, received 9 acks
+2025-01-08 20:44:08 INFO  packet.c:230: [send_subscribe_packet(int, const char*)] : Subscribe packet sent
+2025-01-08 20:44:27 INFO  client.c:57: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2025-01-08 20:48:16 INFO  socketutil.c:154: [connectToServerAuth(int, struct sockaddr_in *, char *, char *)] : Auth success
+2025-01-08 20:48:16 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 1bd0c788-5f0a-43dd-8b55-fa742573f657
+2025-01-08 20:48:16 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: be269803-e979-46fb-b8ee-8e79552deab5
+2025-01-08 20:48:16 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: a3d96e2d-3507-419d-9704-d67015ea44b5
+2025-01-08 20:48:16 WARN  client.c:148: No ACK received for packet 4, retrying (1/3)
+2025-01-08 20:48:16 WARN  client.c:148: No ACK received for packet 4, retrying (2/3)
+2025-01-08 20:48:17 WARN  client.c:148: No ACK received for packet 4, retrying (3/3)
+2025-01-08 20:48:17 ERROR client.c:153: Failed to send packet 4 after 3 retries
+2025-01-08 20:48:17 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: d15fc2d9-277e-4257-ba23-9e8761b1b9c5
+2025-01-08 20:48:17 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 7f1b8a46-e6da-4b4a-bcb3-a2ddeb0e72c1
+2025-01-08 20:48:17 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 0d11a2a6-8a82-4fef-88da-249d522329a9
+2025-01-08 20:48:17 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 76ac0067-e2d2-4c81-9bf3-f5d671f757bc
+2025-01-08 20:48:18 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 381cdd84-6028-422d-88db-e7567216a048
+2025-01-08 20:48:18 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 0bfc0406-34c0-4c12-8132-524944686beb
+2025-01-08 20:48:18 INFO  client.c:161: Sent 10 packets, received 9 acks
+2025-01-08 20:48:18 INFO  packet.c:230: [send_subscribe_packet(int, const char*)] : Subscribe packet sent
+2025-01-08 20:49:53 INFO  socketutil.c:154: [connectToServerAuth(int, struct sockaddr_in *, char *, char *)] : Auth success
+2025-01-08 20:49:53 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 9a684ded-4c6c-45ee-8304-8cad79d594c6
+2025-01-08 20:49:54 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 32b3ed9c-94f9-41ce-9788-748d695c19bc
+2025-01-08 20:49:54 INFO  client.c:175: [handle_consumer_ack(packet)] : Missing 'type' in JSON payload
+2025-01-08 20:49:54 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 61736da3-ae2c-47bf-87f3-4bd9305472ce
+2025-01-08 20:49:54 WARN  client.c:148: No ACK received for packet 4, retrying (1/3)
+2025-01-08 20:49:54 WARN  client.c:148: No ACK received for packet 4, retrying (2/3)
+2025-01-08 20:49:55 WARN  client.c:148: No ACK received for packet 4, retrying (3/3)
+2025-01-08 20:49:55 ERROR client.c:153: Failed to send packet 4 after 3 retries
+2025-01-08 20:49:55 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: d51d26d0-94dd-4dd8-9557-858711c9fd69
+2025-01-08 20:49:55 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 85d74fb9-6d2d-4380-aa94-a12343d94358
+2025-01-08 20:49:55 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 927cb9d5-c9e5-46a1-88c4-66b0bfae76f3
+2025-01-08 20:49:55 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 168f71d4-2f22-4954-bd2e-2e6328765cd9
+2025-01-08 20:49:56 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 73b56370-eb57-4552-a345-b9b03dea2ced
+2025-01-08 20:49:56 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 583732ef-1281-4464-8d8b-e4d612bf6426
+2025-01-08 20:49:56 INFO  client.c:161: Sent 10 packets, received 9 acks
+2025-01-08 20:49:56 INFO  packet.c:230: [send_subscribe_packet(int, const char*)] : Subscribe packet sent
+2025-01-08 20:50:49 INFO  client.c:57: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2025-01-08 20:50:49 INFO  client.c:57: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2025-01-08 21:01:35 INFO  socketutil.c:154: [connectToServerAuth(int, struct sockaddr_in *, char *, char *)] : Auth success
+2025-01-08 21:01:35 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 22bfe8fb-45c1-4cae-a22a-22715ed23aec
+2025-01-08 21:01:35 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 71d75b0b-1c3a-4dfb-b071-c7d898057750
+2025-01-08 21:01:35 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 85f1bd2d-d756-4c0e-b99b-92c4b9aac2ff
+2025-01-08 21:01:36 WARN  client.c:148: No ACK received for packet 4, retrying (1/3)
+2025-01-08 21:01:36 WARN  client.c:148: No ACK received for packet 4, retrying (2/3)
+2025-01-08 21:01:36 WARN  client.c:148: No ACK received for packet 4, retrying (3/3)
+2025-01-08 21:01:36 ERROR client.c:153: Failed to send packet 4 after 3 retries
+2025-01-08 21:01:36 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 11d9dfeb-5af9-4223-9c8b-6eef0d284f0d
+2025-01-08 21:01:36 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 69a69f4c-012c-4a1d-ab2c-258ec3f2635e
+2025-01-08 21:01:37 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 272e0901-d895-4989-9af2-ba46e5efba19
+2025-01-08 21:01:37 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 5777ee28-a712-420f-9283-8f189f0df467
+2025-01-08 21:01:37 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 6ba307f8-2f0c-4c9b-9992-33a52dd887d4
+2025-01-08 21:01:37 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 0309c807-b622-44c2-9e55-e8440e28cf67
+2025-01-08 21:01:37 INFO  client.c:161: 
+Sent 10 packets, received 9 acks
+
+2025-01-08 21:01:37 INFO  packet.c:230: [send_subscribe_packet(int, const char*)] : Subscribe packet sent
+2025-01-08 21:03:26 INFO  socketutil.c:154: [connectToServerAuth(int, struct sockaddr_in *, char *, char *)] : Auth success
+2025-01-08 21:03:26 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 3b54c15d-be7f-4315-9bb9-1fc2d00792b4
+2025-01-08 21:03:26 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 69bdd21a-46d9-44d0-a975-8b291607dee5
+2025-01-08 21:03:26 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 49d0d15c-f172-4c75-a4ea-2bc5f82704bd
+2025-01-08 21:03:27 WARN  client.c:148: No ACK received for packet 4, retrying (1/3)
+2025-01-08 21:03:27 WARN  client.c:148: No ACK received for packet 4, retrying (2/3)
+2025-01-08 21:03:27 WARN  client.c:148: No ACK received for packet 4, retrying (3/3)
+2025-01-08 21:03:27 ERROR client.c:153: Failed to send packet 4 after 3 retries
+2025-01-08 21:03:27 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: dc91bb0e-182b-4b4c-b977-8cdb309016ae
+2025-01-08 21:03:28 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 163e82b6-36a2-4345-a789-4d18a66be794
+2025-01-08 21:03:28 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: fe7ef616-e11c-4356-88f9-1cf42db379ec
+2025-01-08 21:03:28 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 83803bd9-6d28-4180-ac6e-b151a9ecb4cb
+2025-01-08 21:03:28 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 006ef86a-e6f7-4454-a055-99a14069ee1b
+2025-01-08 21:03:28 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: b819b371-4e92-4d00-b506-7ce81bf02b8f
+2025-01-08 21:03:29 INFO  client.c:161: 
+Sent 10 packets, received 9 acks
+
+2025-01-08 21:03:29 INFO  packet.c:230: [send_subscribe_packet(int, const char*)] : Subscribe packet sent
+2025-01-08 21:03:53 INFO  client.c:57: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2025-01-08 21:03:53 INFO  client.c:57: [process_packets(void*)] : Connection closed by server with address 127.0.0.1 and port 32512
+2025-01-08 21:05:53 INFO  socketutil.c:154: [connectToServerAuth(int, struct sockaddr_in *, char *, char *)] : Auth success
+2025-01-08 21:05:53 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 829e1722-8ce8-4d71-8306-4b14208756c1
+2025-01-08 21:05:53 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 73073a15-f517-40f1-a071-db94f19b9620
+2025-01-08 21:05:53 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 1ba780af-68d9-4709-9e9d-4e4b93faee13
+2025-01-08 21:05:54 WARN  client.c:148: No ACK received for packet 4, retrying (1/3)
+2025-01-08 21:05:54 WARN  client.c:148: No ACK received for packet 4, retrying (2/3)
+2025-01-08 21:05:54 WARN  client.c:148: No ACK received for packet 4, retrying (3/3)
+2025-01-08 21:05:54 ERROR client.c:153: Failed to send packet 4 after 3 retries
+2025-01-08 21:05:54 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 69408298-9381-4805-876d-38b3eadae200
+2025-01-08 21:05:54 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: c74fd560-0289-4092-85df-906b5d28524b
+2025-01-08 21:05:55 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 7121184a-e62a-468b-84fd-bd33d50b6a78
+2025-01-08 21:05:55 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 77b5d6a9-6376-458d-8a2d-7774f720e152
+2025-01-08 21:05:55 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 3d5f18bf-8a40-4a52-9154-3227fb6aa8d6
+2025-01-08 21:05:55 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 68deb396-0cae-4f5d-9213-ff12c4069fad
+2025-01-08 21:05:55 INFO  client.c:162: Sent 10 packets, received 9 acks
+
+2025-01-08 21:05:55 INFO  packet.c:230: [send_subscribe_packet(int, const char*)] : Subscribe packet sent
+2025-01-08 21:06:16 INFO  socketutil.c:154: [connectToServerAuth(int, struct sockaddr_in *, char *, char *)] : Auth success
+2025-01-08 21:06:16 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 7f2f0494-e8c6-4163-8af8-5a8e8052ee91
+2025-01-08 21:06:16 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 1bbff4e4-9e27-4aa6-9784-f5bca53515d5
+2025-01-08 21:06:16 INFO  client.c:176: [handle_consumer_ack(packet)] : Missing 'type' in JSON payload
+2025-01-08 21:06:16 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 8152c8d2-a430-4ad7-8f79-0e830033439e
+2025-01-08 21:06:16 WARN  client.c:148: No ACK received for packet 4, retrying (1/3)
+2025-01-08 21:06:17 WARN  client.c:148: No ACK received for packet 4, retrying (2/3)
+2025-01-08 21:06:17 WARN  client.c:148: No ACK received for packet 4, retrying (3/3)
+2025-01-08 21:06:17 ERROR client.c:153: Failed to send packet 4 after 3 retries
+2025-01-08 21:06:17 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 658b829e-02e2-4e0e-a099-ce157e8e3671
+2025-01-08 21:06:17 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: c77d4b7b-b6f8-402f-87bf-b2ca620c4351
+2025-01-08 21:06:17 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 8fe3b894-07ef-4bbd-a3b5-e4de5de376fc
+2025-01-08 21:06:18 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: b9a49d29-00f0-47f5-9d87-cb2d6d1e94dc
+2025-01-08 21:06:18 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 59a489de-24cc-4753-a76c-58f9dab0c5d3
+2025-01-08 21:06:18 INFO  client.c:82: [process_packets(void*)] : Received ACK for packet with ID: 16d0c75c-6e7c-41ef-aa7d-e61aaa86003e
+2025-01-08 21:06:18 INFO  client.c:162: Sent 10 packets, received 9 acks
+
+2025-01-08 21:06:18 INFO  packet.c:230: [send_subscribe_packet(int, const char*)] : Subscribe packet sent

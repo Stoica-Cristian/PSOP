@@ -24,17 +24,12 @@ int main()
     
     connect_to_server_auth(socketFD, address, "admin", "admin");
 
-    printf("Connected to server\n");
+    printf("\nConnected to server\n\n");
 
     pthread_t id;
     pthread_create(&id, NULL, process_packets, NULL);
 
     send_test_packets(socketFD);
-
-    printf("Sending consumer request packets\n");
-
-    send_request_packet(socketFD, "direct", "key1");
-    send_request_packet(socketFD, "topic", "livingroom.temperature");
 
     send_subscribe_packet(socketFD, "livingroom.temperature");
 
@@ -163,7 +158,8 @@ void send_test_packets(int socketFD)
             usleep(100000); // 100ms
         }
 
-        log_info("Sent %d packets, received %d acks", message_count, ack_count);
+        printf("\n");
+        log_info("Sent %d packets, received %d acks\n", message_count, ack_count);
 
         free(messages);
     }

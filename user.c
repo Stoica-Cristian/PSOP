@@ -91,6 +91,7 @@ void print_users(user **users)
             printf("\t%s\n", users[i]->username);
         }
     }
+    printf("\n");
 }
 
 void cleanup_users(user **users)
