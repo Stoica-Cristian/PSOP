@@ -1,47 +1,4 @@
-#include "socketutil.h"
-#include "exchange.h"
-#include "utils.h"
-// #include "user.h"
-
-void receive_incoming_data(client_connection *established_connection);
-void *process_packets(void *arg);
-cJSON *parse_packet_payload_to_json(packet *packet);
-
-void handle_producer_publish(int socketFD, packet *packet_received);
-void handle_consumer_request(int socketFD, packet *packet_received);
-void handle_subscribe(int socketFD, packet *packet_received, client_connection *established_connection);
-void handle_user_authentication(int socketFD, packet *packet_received, client_connection *established_connection);
-
-direct_exchange *direct_exch;
-topic_exchange *topic_exch;
-
-user **users;
-
-#define MAX_PROCESSED_IDS 100
-
-char processed_ids[MAX_PROCESSED_IDS][37]; // Stocăm până la 100 de ID-uri procesate
-int processed_count = 0;
-
-bool is_duplicate(const char *packet_id)
-{
-    for (int i = 0; i < processed_count; ++i)
-    {
-        if (strcmp(processed_ids[i], packet_id) == 0)
-        {
-            return true; // Pachet duplicat
-        }
-    }
-    return false;
-}
-void store_packet_id(const char *packet_id)
-{
-    if (processed_count < MAX_PROCESSED_IDS)
-    {
-        strncpy(processed_ids[processed_count], packet_id, 36);
-        processed_ids[processed_count][36] = '\0';
-        processed_count++;
-    }
-}
+#include "server.h"
 
 int main()
 {
@@ -52,11 +9,9 @@ int main()
     topic_exch = create_topic_exchange();
 
     int serverSocketFD = create_tcp_ipv4_socket();
-
     struct sockaddr_in *serverAddress = create_ipv4_address("", 8080);
 
     bind_socket(serverSocketFD, serverAddress);
-
     listen_for_connections(serverSocketFD);
 
     while (true)
@@ -74,11 +29,7 @@ int main()
     return 0;
 }
 
-void receive_incoming_data(client_connection *established_connection)
-{
-    pthread_t id;
-    pthread_create(&id, NULL, process_packets, (void *)established_connection);
-}
+// server functions
 
 /**
  * Processes incoming packets from a client.
@@ -91,22 +42,34 @@ void *process_packets(void *arg)
     client_connection *established_connection = (client_connection *)arg;
     int socketFD = established_connection->acceptedSocketFD;
 
-    packet packet_received;
-    packet_received.packet_type = PKT_UNKNOWN;
+    packet packet_received = create_packet(PKT_UNKNOWN, "");
 
     int cnt = 0;
     while (true)
     {
+        if (established_connection->acceptedSocketFD == -1)
+        {
+            break;
+        }
+
         ssize_t bytes_received = recv(socketFD, &packet_received, MAX_PACKET_SIZE, 0);
         packet_received.payload[bytes_received - sizeof(packet_type) - sizeof(unique_id)] = '\0';
 
-        char packet_id[37];
-        uid_to_string(&packet_received.id, packet_id);
+        // char packet_id[37];
+        // uid_to_string(&packet_received.id, packet_id);
 
-        if (is_duplicate(packet_id))
+        // if (is_duplicate(packet_id))
+        // {
+        //     log_info("[process_packets(void*)] : Duplicate packet received");
+        //     continue;
+        // }
+
+        // dupa inchiderea clientului folosind CTRL+C, serverul primeste un pachet identic cu ultimul primit, dar cu PacketType PKT_UNKNOWN
+        if (packet_received.packet_type == PKT_UNKNOWN)
         {
             log_info("[process_packets(void*)] : Duplicate packet received");
-            break;
+            handle_disconnect(socketFD, established_connection);
+            continue;
         }
 
         printf("Received packet %d\n", ++cnt);
@@ -134,6 +97,7 @@ void *process_packets(void *arg)
             case PKT_AUTH:
                 handle_user_authentication(socketFD, &packet_received, established_connection);
                 break;
+
             case PKT_PRODUCER_PUBLISH:
                 handle_producer_publish(socketFD, &packet_received);
                 break;
@@ -145,6 +109,12 @@ void *process_packets(void *arg)
             case PKT_SUBSCRIBE:
                 handle_subscribe(socketFD, &packet_received, established_connection);
                 break;
+
+            case PKT_DISCONNECT:
+                log_info("[process_packets(void*)] : Disconnect packet received");
+                handle_disconnect(socketFD, established_connection);
+                break;
+
             case PKT_UNKNOWN:
             default:
                 log_info("[process_packets(void*)] : Packet unknown");
@@ -304,7 +274,6 @@ void handle_consumer_request(int socketFD, packet *packet_received)
         free(json_response_str);
 
         send_packet(socketFD, &response_packet);
-        // print_packet(&response_packet);
     }
 
     if (strcmp(type, "topic") == 0)
@@ -325,6 +294,7 @@ void handle_consumer_request(int socketFD, packet *packet_received)
         if (!q)
         {
             log_info("[handle_consumer_request(int, cJSON*)] : Queue not found for topic %s", topic);
+
             return;
         }
 
@@ -350,7 +320,7 @@ void handle_consumer_request(int socketFD, packet *packet_received)
     }
 }
 
-/*
+/**
  * Handles a subscribe request based on the JSON payload.
  *
  * @param socketFD The socket file descriptor to send the response to.
@@ -382,6 +352,110 @@ void handle_subscribe(int socketFD, packet *packet_received, client_connection *
 }
 
 /**
+ * Handles a user authentication request based on the JSON payload.
+ *
+ * @param socketFD The socket file descriptor to send the response to.
+ * @param packet_received The packet containing the request details.
+ * @param established_connection The client connection object.
+ */
+void handle_user_authentication(int socketFD, packet *packet_received, client_connection *established_connection)
+{
+    store_packet_id(uid_to_string_malloc(&packet_received->id));
+
+    cJSON *json_payload = parse_packet_payload_to_json(packet_received);
+
+    if (!json_payload)
+    {
+        send_bad_format_packet(socketFD, &packet_received->id);
+        log_info("[handle_user_authentication(int, packet*)] : Error parsing JSON payload");
+        return;
+    }
+
+    cJSON *username_item = cJSON_GetObjectItem(json_payload, "username");
+    cJSON *password_item = cJSON_GetObjectItem(json_payload, "password");
+
+    if (!username_item || !password_item)
+    {
+        log_info("[handle_user_authentication(int, packet*)] : Missing 'username' or 'password' in JSON payload");
+        send_incomplete_packet(socketFD, &packet_received->id);
+        return;
+    }
+
+    const char *username = username_item->valuestring;
+    const char *password = password_item->valuestring;
+
+    bool authenticated = authenticate_user(users, username, password);
+
+    if (authenticated)
+    {
+        packet auth_success_packet;
+        auth_success_packet.packet_type = PKT_AUTH_SUCCESS;
+
+        send_packet(socketFD, &auth_success_packet);
+
+        log_info("[handle_user_authentication(int, packet*)] : User %s authenticated successfully", username);
+
+        print_users(users);
+    }
+    else // register
+    {
+        bool registered = register_user(users, username, password);
+
+        if (registered)
+        {
+            packet auth_success_packet;
+            auth_success_packet.packet_type = PKT_AUTH_SUCCESS;
+
+            send_packet(socketFD, &auth_success_packet);
+
+            log_info("[handle_user_authentication(int, packet*)] : User %s registered successfully", username);
+
+            print_users(users);
+        }
+        else
+        {
+            packet auth_failure_packet;
+            auth_failure_packet.packet_type = PKT_AUTH_FAILURE;
+
+            send_packet(socketFD, &auth_failure_packet);
+
+            log_info("[handle_user_authentication(int, packet*)] : User %s authentication failed", username);
+            return;
+        }
+    }
+
+    user *this = find_user(users, username);
+    this->socketFD = socketFD;
+    established_connection->isAuth = authenticated;
+    strncpy(established_connection->username, username, sizeof(established_connection->username) - 1);
+    established_connection->username[sizeof(established_connection->username) - 1] = '\0';
+
+    free(json_payload);
+}
+
+/**
+ * Handles a disconnect request.
+ *
+ * @param socketFD The socket file descriptor to send the response to.
+ * @param established_connection The client connection object.
+ */
+void handle_disconnect(int socketFD, client_connection *established_connection)
+{
+    log_info("[handle_disconnect(int, client_connection*)] : Disconnecting user %s", established_connection->username);
+
+    user *this = find_user(users, established_connection->username);
+    this->socketFD = -1;
+
+    established_connection->isAuth = false;
+    established_connection->acceptedSocketFD = -1;
+    established_connection->acceptedSuccessfully = false;
+    established_connection->error = 0;
+
+    close(socketFD);
+    free(established_connection);
+}
+
+/**
  * Parses the payload of a packet to a JSON object.
  *
  * @param packet The packet to parse.
@@ -406,77 +480,163 @@ cJSON *parse_packet_payload_to_json(packet *packet)
     return json_payload;
 }
 
-void handle_user_authentication(int socketFD, packet *packet_received, client_connection *established_connection)
+//====================== socket functions ======================
+
+int create_tcp_ipv4_socket()
 {
-    store_packet_id(uid_to_string_malloc(&packet_received->id));
+    int socketFD = socket(AF_INET, SOCK_STREAM, 0);
 
-    cJSON *json_payload = parse_packet_payload_to_json(packet_received);
-
-    if (!json_payload)
+    if (socketFD < 0)
     {
-        send_bad_format_packet(socketFD, &packet_received->id);
-        log_info("[handle_user_authentication(int, packet*)] : Error parsing JSON payload");
-        return;
+        log_fatal("[create_tcp_ipv4_socket(void)] : %s", strerror(errno));
+        exit(EXIT_FAILURE);
     }
+    return socketFD;
+}
 
-    cJSON *id_item = cJSON_GetObjectItem(json_payload, "id");
-    cJSON *username_item = cJSON_GetObjectItem(json_payload, "username");
-    cJSON *password_item = cJSON_GetObjectItem(json_payload, "password");
+struct sockaddr_in *create_ipv4_address(char *ip, int port)
+{
+    struct sockaddr_in *addr = malloc(sizeof(struct sockaddr_in));
+    addr->sin_family = AF_INET;
+    addr->sin_port = htons(port);
 
-    if (!username_item || !password_item)
+    if (strlen(ip) == 0)
     {
-        log_info("[handle_user_authentication(int, packet*)] : Missing 'username' or 'password' in JSON payload");
-        send_incomplete_packet(socketFD, &packet_received->id);
-        return;
+        addr->sin_addr.s_addr = INADDR_ANY;
     }
-
-    const char *id = id_item->valuestring;
-    const char *username = username_item->valuestring;
-    const char *password = password_item->valuestring;
-
-    id = id ? id : "0";
-
-    bool authenticated = authenticate_user(users, username, password);
-
-    if (authenticated)
+    else
     {
-        packet auth_success_packet;
-        auth_success_packet.packet_type = PKT_AUTH_SUCCESS;
-
-        send_packet(socketFD, &auth_success_packet);
-
-        log_info("[handle_user_authentication(int, packet*)] : User %s authenticated successfully", username);
-    }
-    else // register
-    {
-        bool registered = register_user(users, username, password);
-
-        if (registered)
+        if (inet_pton(AF_INET, ip, &addr->sin_addr.s_addr) <= 0)
         {
-            packet auth_success_packet;
-            auth_success_packet.packet_type = PKT_AUTH_SUCCESS;
+            log_fatal("[create_ipv4_address(char*, int)] : %s", strerror(errno));
 
-            send_packet(socketFD, &auth_success_packet);
-
-            log_info("[handle_user_authentication(int, packet*)] : User %s registered successfully", username);
-        }
-        else
-        {
-            packet auth_failure_packet;
-            auth_failure_packet.packet_type = PKT_AUTH_FAILURE;
-
-            send_packet(socketFD, &auth_failure_packet);
-
-            log_info("[handle_user_authentication(int, packet*)] : User %s authentication failed", username);
-            return;
+            free(addr);
+            exit(EXIT_FAILURE);
         }
     }
 
-    user* this = find_user(users, username);
-    this->socketFD = socketFD;
-    established_connection->isAuth = authenticated;
-    strncpy(established_connection->username, username, sizeof(established_connection->username) - 1);
-    established_connection->username[sizeof(established_connection->username) - 1] = '\0';
+    return addr;
+}
 
-    free(json_payload);
+void bind_socket(int serverSocketFD, struct sockaddr_in *address)
+{
+    int result = bind(serverSocketFD, (struct sockaddr *)address, sizeof(*address));
+
+    if (result == 0)
+    {
+        log_trace("[bindSocket(int, struct sockaddr_in *)] : Socket was bound successfully");
+    }
+    else
+    {
+        log_fatal("[bindSocket(int, struct sockaddr_in *)] : %s", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+}
+
+void listen_for_connections(int serverSocketFD)
+{
+    int result = listen(serverSocketFD, 10);
+
+    if (result == 0)
+    {
+        log_trace("[listenForConnections(int)] : Socket is listening...");
+    }
+    else
+    {
+        log_fatal("[listenForConnections(int)] : %s", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+}
+
+client_connection *accept_incoming_connection(int serverSocketFD)
+{
+    struct sockaddr_in clientAddress;
+    socklen_t clientAddressSize = sizeof(struct sockaddr_in);
+
+    int clientSocketFD = accept(serverSocketFD, (struct sockaddr *)&clientAddress, &clientAddressSize);
+
+    client_connection *acceptedConnection = malloc(sizeof(client_connection));
+
+    acceptedConnection->acceptedSocketFD = clientSocketFD;
+    acceptedConnection->address = clientAddress;
+    acceptedConnection->acceptedSuccessfully = (clientSocketFD >= 0);
+    acceptedConnection->error = clientSocketFD >= 0 ? 0 : clientSocketFD;
+    acceptedConnection->isAuth = false;
+
+    return acceptedConnection;
+}
+
+void receive_incoming_data(client_connection *established_connection)
+{
+    pthread_t id;
+    pthread_create(&id, NULL, process_packets, (void *)established_connection);
+}
+
+//====================== packet functions ======================
+
+void send_bad_format_packet(int socketFD, const unique_id *uuid)
+{
+    packet bad_format_packet;
+    bad_format_packet.packet_type = PKT_BAD_FORMAT;
+    copy_uid(&bad_format_packet.id, uuid);
+
+    send_packet(socketFD, &bad_format_packet);
+
+    log_info("[send_bad_format_packet(int)] : Bad format packet sent");
+}
+
+void send_producer_ack_packet(int socketFD, const unique_id *uuid)
+{
+    packet ack_packet;
+    ack_packet.packet_type = PKT_PRODUCER_ACK;
+
+    copy_uid(&ack_packet.id, uuid);
+    send_packet(socketFD, &ack_packet);
+
+    log_info("[send_producer_ack_packet(int)] : Producer ACK packet sent");
+}
+
+void send_incomplete_packet(int socketFD, const unique_id *uuid)
+{
+    packet incomplete_packet;
+    incomplete_packet.packet_type = PKT_INCOMPLETE;
+    copy_uid(&incomplete_packet.id, uuid);
+    send_packet(socketFD, &incomplete_packet);
+
+    log_info("[send_incomplete_packet(int)] : Incomplete packet sent");
+}
+
+void send_queue_not_found_packet(int socketFD, const unique_id *uuid)
+{
+    packet queue_not_found_packet;
+    queue_not_found_packet.packet_type = PKT_QUEUE_NOT_FOUND;
+    copy_uid(&queue_not_found_packet.id, uuid);
+    send_packet(socketFD, &queue_not_found_packet);
+
+    log_info("[send_queue_not_found_packet(int)] : Queue not found packet sent");
+}
+
+// check if a packet ID is a duplicate
+
+bool is_duplicate(const char *packet_id)
+{
+    for (int i = 0; i < processed_count; ++i)
+    {
+        if (strcmp(processed_ids[i], packet_id) == 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void store_packet_id(const char *packet_id)
+{
+    if (processed_count >= MAX_PROCESSED_IDS)
+    {
+        processed_count = 0;
+    }
+    strncpy(processed_ids[processed_count], packet_id, 36);
+    processed_ids[processed_count][36] = '\0';
+    processed_count++;
 }

@@ -17,7 +17,6 @@ user* new_user(const char *username, const char *password);
 user* find_user(user **users, const char *username);
 void remove_user(user **users, const char *username);
 void set_user_password(user **users, const char *username, const char *password);
-void set_user_id(user **users, const char *username, unique_id id);
 
 void print_users(user **users);
 void cleanup_users(user **users);

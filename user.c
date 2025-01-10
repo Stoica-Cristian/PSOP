@@ -1,5 +1,9 @@
 #include "user.h"
 
+pthread_mutex_t user_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t find_user_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t register_user_mutex = PTHREAD_MUTEX_INITIALIZER;
+
 void initialize_users(user ***users)
 {
     *users = (user **)malloc(MAX_USERS * sizeof(user *));
@@ -12,15 +16,17 @@ void initialize_users(user ***users)
 
 void add_user(user **users, user *new_user)
 {
+    pthread_mutex_lock(&user_mutex);
     for (int i = 0; i < MAX_USERS; i++)
     {
         if (users[i] == NULL)
         {
             users[i] = new_user;
-            print_users(users);
+            pthread_mutex_unlock(&user_mutex);
             return;
         }
     }
+    pthread_mutex_unlock(&user_mutex);
 }
 
 user *new_user(const char *username, const char *password)
@@ -36,53 +42,53 @@ user *new_user(const char *username, const char *password)
 
 user *find_user(user **users, const char *username)
 {
+    pthread_mutex_lock(&find_user_mutex);
     for (int i = 0; i < MAX_USERS; i++)
     {
         if (users[i] != NULL)
         {
             if (strcmp(users[i]->username, username) == 0)
             {
+                pthread_mutex_unlock(&find_user_mutex);
                 return users[i];
             }
         }
     }
+    pthread_mutex_unlock(&find_user_mutex);
     return NULL;
 }
 
 void remove_user(user **users, const char *username)
 {
+    pthread_mutex_lock(&user_mutex);
     for (int i = 0; i < MAX_USERS; i++)
     {
         if (users[i] != NULL && strcmp(users[i]->username, username) == 0)
         {
             free(users[i]);
             users[i] = NULL;
+            pthread_mutex_unlock(&user_mutex);
             return;
         }
     }
+    pthread_mutex_unlock(&user_mutex);
 }
 
 void set_user_password(user **users, const char *username, const char *password)
 {
+    pthread_mutex_lock(&user_mutex);
     user *found_user = find_user(users, username);
     if (found_user)
     {
         strncpy(found_user->password, password, sizeof(found_user->password) - 1);
         found_user->password[sizeof(found_user->password) - 1] = '\0';
     }
-}
-
-void set_user_id(user **users, const char *username, unique_id id)
-{
-    user *found_user = find_user(users, username);
-    if (found_user)
-    {
-        found_user->id = id;
-    }
+    pthread_mutex_unlock(&user_mutex);
 }
 
 void print_users(user **users)
 {
+    pthread_mutex_lock(&user_mutex);
     printf("Users:\n");
     for (int i = 0; i < MAX_USERS; i++)
     {
@@ -92,10 +98,12 @@ void print_users(user **users)
         }
     }
     printf("\n");
+    pthread_mutex_unlock(&user_mutex);
 }
 
 void cleanup_users(user **users)
 {
+    pthread_mutex_lock(&user_mutex);
     for (int i = 0; i < MAX_USERS; i++)
     {
         if (users[i] != NULL)
@@ -105,21 +113,31 @@ void cleanup_users(user **users)
         }
     }
     free(users);
+    pthread_mutex_unlock(&user_mutex);
 }
 
 bool authenticate_user(user **users, const char *username, const char *password)
 {
+    pthread_mutex_lock(&user_mutex);
     user *found_user = find_user(users, username);
 
-    if (found_user) return strcmp(found_user->password, password) == 0;
+    if (found_user) 
+    {
+        bool result = strcmp(found_user->password, password) == 0;
+        pthread_mutex_unlock(&user_mutex);
+        return result;
+    }
 
+    pthread_mutex_unlock(&user_mutex);
     return false;
 }
 
 bool register_user(user **users, const char *username, const char *password)
 {
+    pthread_mutex_lock(&register_user_mutex);
     if (find_user(users, username) != NULL)
     {
+        pthread_mutex_unlock(&register_user_mutex);
         return false;
     }
 
@@ -127,10 +145,12 @@ bool register_user(user **users, const char *username, const char *password)
 
     if (!new_user_instance)
     {
+        pthread_mutex_unlock(&register_user_mutex);
         return false;
     }
 
     add_user(users, new_user_instance);
+    pthread_mutex_unlock(&register_user_mutex);
 
     return true;
 }

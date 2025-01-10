@@ -166,3 +166,17 @@ void log_log(int level, const char *file, int line, const char *fmt, ...) {
 
   unlock();
 }
+
+void set_log_file(const char *filename, int level)
+{
+    FILE *log_file = fopen(filename, "a");
+
+    if (log_file == NULL)
+    {
+        perror("[set_log_file(const char*)] ");
+        return;
+    }
+
+    log_add_fp(log_file, level);
+}
+

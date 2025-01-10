@@ -1,7 +1,8 @@
 CC = gcc
 CFLAGS = -Wall
 
-OBJ = socketutil.o queue.o cJSON.o log.o utils.o packet.o exchange.o hash_table.o trie.o user.o
+SERVER_OBJ = queue.o cJSON.o log.o packet.o exchange.o hash_table.o trie.o user.o server.o
+LIBRARY_OBJ = cJSON.o log.o packet.o message_broker.o
 
 ifeq ($(shell pkg-config --exists uuid && echo yes),yes)
     CFLAGS += $(shell pkg-config --cflags uuid)
@@ -11,13 +12,13 @@ else
     USE_UUID = 0
 endif
 
-all: client server clean_obj
+all: libmessagebroker.a server clean_obj
 
-client: client.c $(OBJ)
-	$(CC) $(CFLAGS) -o client client.c $(OBJ) $(LDLIBS)
+libmessagebroker.a: $(LIBRARY_OBJ)
+	ar rcs libmessagebroker.a $(LIBRARY_OBJ)
 
-server: server.c $(OBJ)
-	$(CC) $(CFLAGS) -o server server.c $(OBJ) $(LDLIBS)
+server: server.c $(SERVER_OBJ)
+	$(CC) $(CFLAGS) -o server $(SERVER_OBJ) $(LDLIBS)
 
 %.o: %.c %.h
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -29,7 +30,7 @@ clean_obj:
 	rm -f *.o
 
 clean:
-	rm -f client server *.o
+	rm -f server libmessagebroker.a *.o
 
 clean_logs:
 	rm -f *.log

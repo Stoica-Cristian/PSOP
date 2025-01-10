@@ -90,3 +90,40 @@ void free_topic_exchange(topic_exchange *exchange)
 
 //============================== Fanout Exchange ==============================//
 
+fanout_exchange *create_fanout_exchange()
+{
+    fanout_exchange *exchange = (fanout_exchange *)malloc(sizeof(fanout_exchange));
+    exchange->queues = create_queue("", "");
+    return exchange;
+}
+
+void fanout_exch_insert_queue(fanout_exchange *exchange, queue *q)
+{
+    // enqueue_queue(exchange->queues, q);
+}
+
+void fanout_exch_insert_message(fanout_exchange *exchange, message message)
+{
+    queue *current = exchange->queues;
+    while (current)
+    {
+        enqueue_message(current, &message);
+        current = current->next_queue;
+    }
+}
+
+void fanout_exch_print_queues(fanout_exchange *exchange)
+{
+    print_queues(exchange->queues);
+}
+
+void free_fanout_exchange(fanout_exchange *exchange)
+{
+    free_queue(exchange->queues);
+    free(exchange);
+}
+
+queue *fanout_exch_get_queues(fanout_exchange *exchange)
+{
+    return exchange->queues;
+}

@@ -64,8 +64,16 @@ void trie_insert_topic(trie_node *root, message message, const char *topic)
     }
 
     current_node->is_end_of_topic = true;
-    current_node->queue = create_queue(topic, "");
-    enqueue_message(current_node->queue, &message);
+
+    if (current_node->queue == NULL)
+    {
+        current_node->queue = create_queue(topic, "");
+        enqueue_message(current_node->queue, &message);
+    }
+    else
+    {
+        enqueue_message(current_node->queue, &message);
+    }
 
     free(topic_copy);
 
@@ -77,7 +85,16 @@ void trie_insert_topic(trie_node *root, message message, const char *topic)
 
             if (subscriber->socketFD > 0)
             {
-                packet response_packet = create_packet(PKT_CONSUMER_RESPONSE, message.payload);
+                cJSON *json_payload = cJSON_CreateObject();
+                cJSON_AddStringToObject(json_payload, "type", "topic");
+                cJSON_AddStringToObject(json_payload, "topic", topic);
+                cJSON_AddStringToObject(json_payload, "payload", message.payload);
+
+                char *json_payload_str = cJSON_PrintUnformatted(json_payload);
+                packet response_packet = create_packet(PKT_CONSUMER_RESPONSE, json_payload_str);
+
+                free(json_payload_str);
+                cJSON_Delete(json_payload);
 
                 send_packet(subscriber->socketFD, &response_packet);
 
@@ -148,6 +165,28 @@ void print_trie_helper(trie_node *node, char *buffer, int level)
         if (node->is_end_of_topic)
         {
             printf(" [Complet topic: %s]", buffer);
+            if (node->queue)
+            {
+                printf("\n");
+
+                q_node *current = node->queue->first_node;
+                int index = 1;
+                while (current != NULL)
+                {
+                    for (int i = 0; i < level * 6; i++)
+                    {
+                        printf(" ");
+                    }
+
+                    printf("Message %d: %s", index++, current->message.payload);
+
+                    if (current->next)
+                    {
+                        printf("\n");
+                    }
+                    current = current->next;
+                }
+            }
         }
         printf("\n");
 
@@ -170,9 +209,16 @@ void print_trie_helper(trie_node *node, char *buffer, int level)
 
 void print_trie(trie_node *root)
 {
+    if (root == NULL)
+    {
+        return;
+    }
+
     printf("\nTrie:\n");
     char buffer[1024] = "";
+
     print_trie_helper(root, buffer, 0);
+
     printf("\n");
 }
 
@@ -202,7 +248,6 @@ void trie_insert_subscriber(trie_node *root, const char *topic, user *subscriber
 
     if (node)
     {
-        // Verifică dacă utilizatorul există deja
         if (node->subscribers)
         {
             for (int i = 0; node->subscribers[i] != NULL; i++)
@@ -210,12 +255,11 @@ void trie_insert_subscriber(trie_node *root, const char *topic, user *subscriber
                 if (strcmp(node->subscribers[i]->username, subscriber->username) == 0)
                 {
                     log_info("User %s is already subscribed to topic: %s", subscriber->username, topic);
-                    return; // Utilizatorul există deja
+                    return;
                 }
             }
         }
 
-        // Adaugă utilizatorul dacă nu există deja
         add_user(node->subscribers, subscriber);
         log_info("User %s subscribed to topic: %s", subscriber->username, topic);
     }
@@ -234,45 +278,63 @@ void traverse_and_print(trie_node *node, char *buffer, int level)
         return;
     }
 
-    // Adaugă partea curentă a topicului în buffer
-    if (node->topic_part != NULL)
+    for (int i = 0; i < level * 4; i++)
     {
-        strncpy(buffer + level, node->topic_part, strlen(node->topic_part));
-        buffer[level + strlen(node->topic_part)] = '\0';
+        printf(" ");
     }
 
-    // Dacă este sfârșitul unui topic, afișează subscriberii
-    if (node->is_end_of_topic)
+    if (node->topic_part)
     {
-        printf("Topic: %s\n", buffer);
-        if (node->subscribers)
+        if (strcmp(node->topic_part, "*") != 0)
         {
-            printf("  Subscribers:\n");
-            for (int i = 0; node->subscribers[i] != NULL; i++)
+            strcat(buffer, node->topic_part);
+        }
+        printf("|-- %s", node->topic_part);
+
+        if (node->is_end_of_topic)
+        {
+            if (node->subscribers)
             {
-                printf("    - %s\n", node->subscribers[i]->username);
+                printf("\n");
+                
+                for (int i = 0; i < level * 6; i++)
+                {
+                    printf(" ");
+                }
+
+
+                for (int i = 0; node->subscribers[i] != NULL; i++)
+                {
+                    printf("%d: %s", i + 1, node->subscribers[i]->username);
+
+                    if (node->subscribers[i + 1] != NULL)
+                    {
+                        printf("\n");
+                    }
+                }
+            }
+            else
+            {
+                // printf("No subscribers\n");
             }
         }
-        else
+        printf("\n");
+
+        if (strcmp(node->topic_part, "*") != 0)
         {
-            printf("  No subscribers\n");
+            strcat(buffer, ".");
         }
     }
 
-    // Traversează copiii nodului curent
     for (int i = 0; i < MAX_CHILDREN; i++)
     {
         if (node->children[i] != NULL)
         {
-            traverse_and_print(node->children[i], buffer, level + strlen(node->topic_part));
+            traverse_and_print(node->children[i], buffer, level + 1);
         }
     }
 
-    // Șterge partea curentă a topicului din buffer
-    if (node->topic_part != NULL)
-    {
-        buffer[level] = '\0';
-    }
+    buffer[strlen(buffer) - (node->topic_part ? strlen(node->topic_part) + 1 : 0)] = '\0';
 }
 
 void trie_print_subscribers(trie_node *root)
@@ -281,7 +343,10 @@ void trie_print_subscribers(trie_node *root)
     {
         return;
     }
+
+    printf("\nSubscribers:\n");
     char topic_buffer[1024] = "";
 
     traverse_and_print(root, topic_buffer, 0);
+    printf("\n");
 }

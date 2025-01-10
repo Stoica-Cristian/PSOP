@@ -23,8 +23,8 @@ packet create_packet(packet_type type, const char *payload)
 {
     packet packet;
     packet.packet_type = type;
+
     generate_uid(&packet.id);
-    printf("Packet ID: ");
 
     strncpy(packet.payload, payload, sizeof(packet.payload) - 1);
     packet.payload[sizeof(packet.payload) - 1] = '\0';
@@ -64,10 +64,10 @@ char *packet_type_to_string(packet_type type)
         return "PKT_CONSUMER_NACK";
     case PKT_DISCONNECT:
         return "PKT_DISCONNECT";
-    case PKT_DISCONNECT_ACK:
-        return "PKT_DISCONNECT_ACK";
     case PKT_SUBSCRIBE:
         return "PKT_SUBSCRIBE";
+    case PKT_QUEUE_NOT_FOUND:
+        return "PKT_QUEUE_NOT_FOUND";
     case PKT_UNKNOWN:
     default:
         return "PKT_UNKNOWN";
@@ -126,108 +126,6 @@ void send_packet(int socketfd, packet *packet)
     {
         log_info("[send_packet(int, packet*)] : Connection closed by server");
     }
-}
-
-void send_bad_format_packet(int socketFD, const unique_id *uuid)
-{
-    packet bad_format_packet;
-    bad_format_packet.packet_type = PKT_BAD_FORMAT;
-    copy_uid(&bad_format_packet.id, uuid);
-
-    send_packet(socketFD, &bad_format_packet);
-
-    log_info("[send_bad_format_packet(int)] : Bad format packet sent");
-}
-
-void send_producer_ack_packet(int socketFD, const unique_id *uuid)
-{
-    packet ack_packet;
-    ack_packet.packet_type = PKT_PRODUCER_ACK;
-
-    print_uid(uuid);
-
-    copy_uid(&ack_packet.id, uuid);
-    send_packet(socketFD, &ack_packet);
-
-    log_info("[send_producer_ack_packet(int)] : Producer ACK packet sent");
-}
-
-void send_incomplete_packet(int socketFD, const unique_id *uuid)
-{
-    packet incomplete_packet;
-    incomplete_packet.packet_type = PKT_INCOMPLETE;
-    copy_uid(&incomplete_packet.id, uuid);
-    send_packet(socketFD, &incomplete_packet);
-
-    log_info("[send_incomplete_packet(int)] : Incomplete packet sent");
-}
-
-void send_request_packet(int socketFD, const char *type, const char *identifier)
-{
-    if (type == NULL || identifier == NULL || strlen(type) == 0 || strlen(identifier) == 0)
-    {
-        log_error("[send_request_packet(int, const char*, const char*)] : Invalid type or identifier");
-        return;
-    }
-
-    cJSON *json_payload = cJSON_CreateObject();
-
-    if (strcmp(type, "direct") == 0)
-    {
-        cJSON_AddStringToObject(json_payload, "type", type);
-        cJSON_AddStringToObject(json_payload, "key", identifier);
-    }
-    else if (strcmp(type, "topic") == 0)
-    {
-        cJSON_AddStringToObject(json_payload, "type", type);
-        cJSON_AddStringToObject(json_payload, "topic", identifier);
-    }
-    else
-    {
-        log_error("[send_request_packet(int, const char*, const char*)] : Unknown type");
-        cJSON_Delete(json_payload);
-        return;
-    }
-
-    char *json_str = cJSON_PrintUnformatted(json_payload);
-    packet request_packet = create_packet(PKT_CONSUMER_REQUEST, json_str);
-
-    cJSON_Delete(json_payload);
-
-    send_packet(socketFD, &request_packet);
-
-    log_info("[send_request_packet(int, const char*, const char*)] : Consumer request packet sent");
-}
-
-void send_disconnect_packet(int socketFD, const unique_id *uuid)
-{
-    packet disconnect_packet;
-    disconnect_packet.packet_type = PKT_DISCONNECT;
-    copy_uid(&disconnect_packet.id, uuid);
-    send_packet(socketFD, &disconnect_packet);
-
-    log_info("[send_disconnect_packet(int)] : Disconnect packet sent");
-}
-
-void send_subscribe_packet(int socketFD, const char *topic)
-{
-    if (topic == NULL || strlen(topic) == 0)
-    {
-        log_error("[send_subscribe_packet(int, const char*)] : Invalid topic");
-        return;
-    }
-
-    cJSON *json_payload = cJSON_CreateObject();
-    cJSON_AddStringToObject(json_payload, "topic", topic);
-
-    char *json_str = cJSON_PrintUnformatted(json_payload);
-    packet subscribe_packet = create_packet(PKT_SUBSCRIBE, json_str);
-
-    cJSON_Delete(json_payload);
-
-    send_packet(socketFD, &subscribe_packet);
-
-    log_info("[send_subscribe_packet(int, const char*)] : Subscribe packet sent");
 }
 
 void generate_custom_uid(char *custom_id)

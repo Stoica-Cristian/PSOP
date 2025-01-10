@@ -48,6 +48,8 @@ void copy_uid(unique_id *dest, const unique_id *src);
 bool uid_equals(const unique_id *uid1, const unique_id *uid2);
 
 #define MAX_PACKET_SIZE 8192
+#define MAX_RETRIES 3
+#define RETRY_DELAY 300000 // 300ms
 
 typedef enum packet_type
 {
@@ -55,6 +57,7 @@ typedef enum packet_type
     PKT_BAD_FORMAT,  // bad json format
     PKT_INCOMPLETE,  // incomplete fields
     PKT_EMPTY_QUEUE, // after timer expires
+    PKT_QUEUE_NOT_FOUND,
     PKT_PRODUCER_PUBLISH,
     PKT_PRODUCER_ACK,
     PKT_PRODUCER_NACK,
@@ -66,7 +69,6 @@ typedef enum packet_type
     PKT_AUTH_SUCCESS,
     PKT_AUTH_FAILURE,
     PKT_DISCONNECT,
-    PKT_DISCONNECT_ACK,
     PKT_SUBSCRIBE,
 } packet_type;
 
@@ -82,15 +84,8 @@ packet create_packet(packet_type type, const char *payload);
 char* packet_type_to_string(packet_type type);
 void print_packet(const packet *packet);
 void packet_destroy(packet *packet);
-
 void packet_set_payload(packet *packet, const char *data, int size);
 
-void send_packet(int socketfd, packet *packet);
-void send_bad_format_packet(int socketFD, const unique_id *uuid);
-void send_producer_ack_packet(int socketFD, const unique_id *uuid);
-void send_incomplete_packet(int socketFD, const unique_id *uuid);
-void send_request_packet(int socketFD, const char *type, const char *identifier);
-void send_disconnect_packet(int socketFD, const unique_id *uuid);
-void send_subscribe_packet(int socketFD, const char *topic);
+void send_packet(int socketFD, packet *packet);
 
 #endif

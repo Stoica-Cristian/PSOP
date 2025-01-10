@@ -56,4 +56,13 @@ queue *topic_exch_search_topic(topic_exchange *exchange, const char *topic);
 void topic_exch_print_trie(topic_exchange *exchange);
 void free_topic_exchange(topic_exchange *exchange);
 
+// Fanout exchange
+
+fanout_exchange *create_fanout_exchange();
+void fanout_exch_insert_queue(fanout_exchange *exchange, queue *q);
+void fanout_exch_insert_message(fanout_exchange *exchange, message message);
+void fanout_exch_print_queues(fanout_exchange *exchange);
+void free_fanout_exchange(fanout_exchange *exchange);
+queue* fanout_exch_get_queues(fanout_exchange *exchange);
+
 #endif
