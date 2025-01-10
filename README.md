@@ -67,26 +67,27 @@ gcc -o test_client src/test_client.c -Iinclude -Llib -lmessagebroker
 ```
 ## Fluxul aplicatiei
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 sequenceDiagram
-    participant Producer (Static Library)
+    participant MessageBroker
     participant Server
     participant Exchange
-    participant Consumer (Static Library)
 
-    Producer (Static Library)->>Server: Send Message (DATA/CONTROL/STATUS)
-    Server-->>Producer (Static Library): Acknowledge (DATA/STATUS)
-    Server-->>Producer (Static Library): Error message (CONTROL)
+    MessageBroker->>Server: Authenticate (PKT_AUTH)
+    Server-->>MessageBroker: Authentication Success (PKT_AUTH_SUCCESS)
+    Server-->>MessageBroker: Authentication Failure (PKT_AUTH_FAILURE)
+
+    MessageBroker->>Server: Send Message (PKT_PRODUCER_PUBLISH)
+    Server-->>MessageBroker: Acknowledge (PKT_PRODUCER_ACK)
+    Server-->>MessageBroker: Error Message (PKT_BAD_FORMAT | INCOMPLETE)
 
     Server->>Exchange: Store Message (Based on Type)
 
-    Consumer (Static Library)->>Server: Subscribe to Topic (CONTROL)
-    Server-->>Consumer (Static Library): Subscription Acknowledged (STATUS)
+    MessageBroker->>Server: Subscribe to Topic (PKT_SUBSCRIBE)
 
-    Consumer (Static Library)->>Server: Request Messages (CONTROL)
-    Server->>Exchange: Retrieve Messages (DATA)
-    Server-->>Consumer (Static Library): Send Messages (DATA)
-
+    MessageBroker->>Server: Request Messages (PKT_CONSUMER_REQUEST)
+    Server->>Exchange: Retrieve Messages (Based on request Type)
+    Server-->>MessageBroker: Send Messages (PKT_CONSUMER_RESPONSE)
+    MessageBroker->>Server: Disconnect (PKT_DISCONNECT)
 ```
 1. Din perspectiva producatorului:
    - creeaza si trimite mesaje in format JSON catre server
