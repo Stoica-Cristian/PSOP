@@ -15,7 +15,7 @@
 
 ## Prezentare generala
 
-Acest proiect implementează un sistem de broker de mesaje, destinat facilitării schimbului de mesaje între **producători** și **consumatori** prin intermediul unui server centralizat. Sistemul este conceput pentru a permite producătorilor să trimită mesaje către server, iar consumatorilor să se aboneze la anumite chei sau topice pentru a primi mesajele relevante. Serverul gestionează distribuția mesajelor folosind un mecanism de exchange. Tipurile de exchange suportate includ **Direct Exchange** și **Topic Exchange**. Proiectul include componente pentru producători, consumatori și server, fiecare având roluri și funcționalități bine definite pentru a asigura un flux eficient de mesaje.
+Acest proiect implementează un sistem de broker de mesaje, destinat facilitării schimbului de mesaje între **producători** și **consumatori** prin intermediul unui server centralizat. Sistemul este conceput pentru a permite producătorilor să trimită mesaje către server, iar consumatorilor să se aboneze la anumite topice pentru a primi mesajele. Serverul gestionează distribuția mesajelor folosind un mecanism de exchange. Tipurile de exchange suportate includ **Direct Exchange** și **Topic Exchange**, prezentate in detaliu ulterior. Proiectul include o biblioteca statica (API) care permite utilizatorului sa comunice cu serverul si sa preia atat rolul producatorului, cat si rolul consumatorului, și server, fiecare având roluri și funcționalități bine definite pentru a asigura un flux eficient de mesaje.
 
 ## Instalare
 
@@ -23,7 +23,7 @@ Ruleaza comanda **make** in directorul root al proiectului
 ```bash
 make
 ```
-In urma executarii comenzii vor fi create cele trei executabile: **server**, **producer** si **consumer**
+In urma executarii comenzii va fi creat executabilul **server** si biblioteca statica **messagebroker**.
 
 > [!WARNING]
 > Proiectul foloseste biblioteca [libuuid](https://github.com/util-linux/util-linux/tree/master/libuuid). 
@@ -48,49 +48,68 @@ sudo pacman -S util-linux-libs
 ```bash
 ./server
 ```
-### Rulati producatorul (sau consumatorul)
+### Presupunand ca structura proiectului vostru este organizat astfel:
+```makefile
+project/
+├── lib/                # Biblioteca statică
+│   └── libmessagebroker.a
+├── include/            # Fișierele de antet
+│   ├── message_broker.h
+│   ├── log.h
+│   ├── packet.h
+│   └── cJSON.h
+├── src/                # Codul sursă pentru clientul de test
+│   └── test_client.c
+```
+### Proiectul poate fi compilat folosind comanda:
 ```bash
-./producer ( or ./consumer)
+gcc -o test_client src/test_client.c -Iinclude -Llib -lmessagebroker
 ```
 ## Fluxul aplicatiei
 ```mermaid
 sequenceDiagram
-    participant Producer
+    participant MessageBroker
     participant Server
     participant Exchange
-    participant Consumer
 
-    Producer->>Server: Send Message
-    Server-->>Producer: Acknowledge
-    Server-->>Producer: Error message
+    MessageBroker->>Server: Authenticate (PKT_AUTH)
+    Server-->>MessageBroker: Authentication Success (PKT_AUTH_SUCCESS)
+    Server-->>MessageBroker: Authentication Failure (PKT_AUTH_FAILURE)
 
-    Server->>Exchange: Store Message
+    MessageBroker->>Server: Send Message (PKT_PRODUCER_PUBLISH)
+    Server-->>MessageBroker: Acknowledge (PKT_PRODUCER_ACK)
+    Server-->>MessageBroker: Error Message (PKT_BAD_FORMAT | INCOMPLETE)
 
-    Consumer->>Server: Subscribe to Topic
-    Server-->>Consumer: Subscription Acknowledged
+    Server->>Exchange: Store Message (Based on Type)
 
-    Consumer->>Server: Request Messages
-    Server->>Exchange: Retrieve Messages
-    Server-->>Consumer: Send Messages
+    MessageBroker->>Server: Subscribe to Topic (PKT_SUBSCRIBE)
+
+    MessageBroker->>Server: Request Messages (PKT_CONSUMER_REQUEST)
+    Server->>Exchange: Retrieve Messages (Based on request Type)
+    Server-->>MessageBroker: Send Messages (PKT_CONSUMER_RESPONSE)
+    MessageBroker->>Server: Disconnect (PKT_DISCONNECT)
 ```
-1. Producer:
+1. Din perspectiva producatorului:
    - creeaza si trimite mesaje in format JSON catre server
    - primeste si gestioneaza confirmari sau mesaje de eroare de la server
    - foloseste un mecanism de retry:
      + se incearca trimiterea pachetului de un anumit numar de ori la un inteval de timp care creste progresiv pana la primirea confirmarii de la server sau pana la epuizarea incercarilor
 2. Server:
-   + gestioneaza conexiuni multiple cu ambele tipuri de clienti
+   + gestioneaza conexiuni multiple
+   + permite autentificarea clientilor pe baza username-ului si a unei parole
    + primeste mesaje de la producatori
-   + stocheaza mesajele in functie de tipul mesajului (direct, topic, fanout)
+   + stocheaza mesajele in functie de tipul mesajului (direct, topic)
    + primeste cereri de mesaje de la consumatori
+   + permite abonarea consumatorilor la anumite topice (necesita autentificare)
    + trimite mesaje catre consumatori
-4. Consumer:
+4. Din perspectiva consumatorului:
    + trimite cereri pentru a primi mesaje
+   + se poate abona la anumite topice
    + primeste mesaje de la server
 5. Exchange:
    + stocheaza si gestioneaza mesajele aferente
    + exista 2 tipuri de astfel de exchange-uri
-     - direct exchange: coada identificata printr o cheie
+     - direct exchange: coada identificata printr o cheie (ex: "key 1")
      - topic exchange: mesajele sunt rutate către cozi pe baza unui topic specific. Topicurile sunt definite ca șiruri de caractere separate prin puncte (.), de exemplu: sport.football, news.weather
   
 ## Structuri de date
@@ -111,11 +130,13 @@ classDiagram
         PKT_EMPTY_QUEUE
         PKT_PRODUCER_PUBLISH
         PKT_PRODUCER_ACK
-        PKT_PRODUCER_NACK
         PKT_CONSUMER_REQUEST
         PKT_CONSUMER_RESPONSE
-        PKT_CONSUMER_ACK
-        PKT_CONSUMER_NACK
+        PKT_AUTH
+        PKT_AUTH_SUCCESS
+        PKT_AUTH_FAILURE
+        PKT_DISCONNECT
+        PKT_SUBSCRIBE
     }
 
     class unique_id {
@@ -141,8 +162,11 @@ classDiagram
      - PKT_PRODUCER_NACK: Negație de la producător
      - PKT_CONSUMER_REQUEST: Cerere de la consumator
      - PKT_CONSUMER_RESPONSE: Răspuns către consumator
-     - PKT_CONSUMER_ACK: Confirmare de la consumator
-     - PKT_CONSUMER_NACK: Negație de la consumator
+     - PKT_AUTH: Autentificarea clientului la server
+     - PKT_AUTH_SUCCESS: Confirmă autentificarea reușită
+     - PKT_AUTH_FAILURE: Notifică eșecul autentificării
+     - PKT_DISCONNECT: Solicită sau notifică deconectarea clientului
+     - PKT_SUBSCRIBE: Abonare la un topic specific
 2. id:
    + Identificator unic al pachetului, definit prin structura unique_id. Acesta este utilizat pentru a urmări pachetele și a asigura unicitatea lor.
    + Structura unique_id poate conține:
@@ -196,7 +220,7 @@ Mesage:<br>
        - MSG_EMPTY: Mesaj gol
        - MSG_INVALID: Mesaj invalid
        - MSG_DIRECT: Mesaj direct
-       - MSG_FANOUT: Mesaj fanout
+       - MSG_FANOUT: Mesaj fanout (inca neimplementat)
        - MSG_TOPIC: Mesaj topic
 2. payload
    + Datele utile ale mesajului, stocate într-un array de caractere de dimensiune MAX_PAYLOAD_SIZE. Aceste date reprezintă conținutul efectiv al mesajului.<br>
@@ -220,7 +244,7 @@ Queue:<br>
 7. mutex
    + Mutex pentru sincronizare, utilizat pentru a asigura accesul concurent sigur la coadă.
 8. not_empty_cond
-   + Condiție pentru a semnala că coada nu este goală, utilizată pentru a notifica consumatorii că sunt mesaje disponibile.
+   + Condiție pentru a semnala ca exista mesaje in coada.
 ##
 ### Exchange-uri si structurile de date folosite de aceastea
 ```mermaid
@@ -280,12 +304,5 @@ Fanout_exchange:<br>
 ## Functionalitati viitoare
 1. Server:
    - adaugare fanout exchange
-   - creare de noi structuri care sa permita autentificarea consumatorilor si posibilitatea ca acestia sa se aboneze la anumite topice
    - posibilitatea monitorizarii cozilor prin comenzi din terminal
-   - salvarea mesajelor pe disk pentru a asigura persistenta
-2. Consumer:
-   - posibilitatea de a se abona la un anumit topic
-   - implementarea unui meniu care sa ofere utilizatorului posibilitatea de a crea cereri in linie de comanda
-3. Producer:
-   - implementarea unui meniu care sa ofere utilizatorului posibilitatea de a crea mesaje in linie de comanda
 ##
